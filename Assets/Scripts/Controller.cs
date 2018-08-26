@@ -104,7 +104,7 @@ public class Controller : MonoBehaviour
         {
             Vector2 midBottom = new Vector2(colliderComp.bounds.center.x, colliderComp.bounds.min.y - 0.1f);
             RaycastHit2D rayHit = Physics2D.Raycast(midBottom, Vector2.down);
-            if (rayHit != null && rayHit.distance < 0.3f)
+            if (rayHit != null && rayHit.distance < 0.01f)
             {
                 isJumping = false;
                 animator.SetBool(AnimationConstants.PLAYER_JUMP, false);

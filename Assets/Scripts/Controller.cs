@@ -11,6 +11,7 @@ public class Controller : MonoBehaviour
 
     //TODO replace all magic numbers
     //TODO do attacking in seperate component.
+    //TODO fix animation when falling off small ledges.
 
     public float speed;
     public float jumpSpeed;

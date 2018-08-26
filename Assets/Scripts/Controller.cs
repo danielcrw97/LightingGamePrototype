@@ -78,7 +78,7 @@ public class Controller : MonoBehaviour
         }
 
         animator.SetBool(AnimationConstants.PLAYER_JUMP, isJumping);
-        animator.SetBool(AnimationConstants.PLAYER_FALL, isJumping && (rb.velocity.y < 0));
+        animator.SetBool(AnimationConstants.PLAYER_FALL, rb.velocity.y < 0f);
     }
 
     private void HandleJump()

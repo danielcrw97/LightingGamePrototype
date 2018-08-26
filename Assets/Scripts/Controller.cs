@@ -77,6 +77,12 @@ public class Controller : MonoBehaviour
             verMovement = jumpSpeed;
         }
 
+        if(isJumping)
+        {
+            HandleJump();
+        }
+
+        /*
         if (isJumping && rb.velocity.y < 0f)
         {
             verMovement = rb.velocity.y + (Physics2D.gravity.y * (fallingGravityMult - 1) * Time.fixedDeltaTime);
@@ -92,17 +98,35 @@ public class Controller : MonoBehaviour
         {
             CheckIfCurrentlyJumping();
         }
+        */
+
+        animator.SetBool("Jumping", isJumping);
+        animator.SetBool("Falling", isJumping && (rb.velocity.y < 0));
 
         rb.velocity = new Vector2(horMovement, verMovement);
     }
 
-    private void CheckIfCurrentlyJumping()
+    private void HandleJump()
+    {
+        if (rb.velocity.y < 0f)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + (Physics2D.gravity.y * (fallingGravityMult - 1) * Time.fixedDeltaTime));
+        }
+
+
+        if (rb.velocity.y > 0f && !Input.GetKey(KeyCode.Space))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + (Physics2D.gravity.y * (notHoldingJumpMult - 1) * Time.fixedDeltaTime));
+        }
+
+        CheckIfStillJumping();
+    }
+
+    private void CheckIfStillJumping()
     {
         if (isJumping && rb.velocity.y < 0f)
         {
-            Vector2 center = collider.bounds.center;
-            Vector2 minimum = collider.bounds.min;
-            Vector2 midBottom = new Vector2(center.x, minimum.y);
+            Vector2 midBottom = new Vector2(collider.bounds.center.x, collider.bounds.min.y - 0.1f);
             RaycastHit2D rayHit = Physics2D.Raycast(midBottom, Vector2.down);
             if (rayHit != null && rayHit.distance < 0.1f)
             {

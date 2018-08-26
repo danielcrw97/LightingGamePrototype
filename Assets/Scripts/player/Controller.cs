@@ -11,6 +11,7 @@ public class Controller : MonoBehaviour
 
     //TODO replace all magic numbers
     //TODO do attacking in seperate component.
+    //TODO fix animation when falling off small ledges.
 
     public float speed;
     public float jumpSpeed;
@@ -78,7 +79,7 @@ public class Controller : MonoBehaviour
         }
 
         animator.SetBool(AnimationConstants.PLAYER_JUMP, isJumping);
-        animator.SetBool(AnimationConstants.PLAYER_FALL, isJumping && (rb.velocity.y < 0));
+        animator.SetBool(AnimationConstants.PLAYER_FALL, rb.velocity.y < 0f);
     }
 
     private void HandleJump()

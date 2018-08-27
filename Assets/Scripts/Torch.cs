@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Torch : MonoBehaviour {
 
+    [SerializeField]
+    private GameObject rechargeParticles;
+
+    private ParticleSystem particles;
     private bool flipped;
     private Light torch;
     private SpriteRenderer rendererComp;
@@ -11,21 +15,26 @@ public class Torch : MonoBehaviour {
     public float energyRemaining;
     public float rechargeRate;
 
+    private const float MAX_ENERGY = 300f;
+
     void Awake()
     {
         this.torch = GetComponentInChildren<Light>();
         List<GameObject> crystals = new List<GameObject>(GameObject.FindGameObjectsWithTag(Tags.CRYSTAL_TAG));
+        crystalPositions = new List<Transform>();
         foreach(GameObject crystal in crystals)
         {
-            crystalPositions.Add(crystal.transform);
+            this.crystalPositions.Add(crystal.transform);
         }
     }
 
     void Start () {
         this.rendererComp = GetComponent<SpriteRenderer>();
         this.flipped = rendererComp.flipX;
-        this.energyRemaining = 1000f;
+        this.energyRemaining = MAX_ENERGY;
         this.rechargeRate = 200f;
+        Instantiate(rechargeParticles, this.transform, false);
+        this.particles = rechargeParticles.GetComponent<ParticleSystem>();
     }
 	
 	// Update is called once per frame
@@ -44,12 +53,20 @@ public class Torch : MonoBehaviour {
             // Die
         }
 
-        foreach(Transform crystalPos in crystalPositions)
-        {
+        foreach (Transform crystalPos in crystalPositions)
+        {     
             // If close enough to a crystal listen for recharging inputs. 
-            if((crystalPos.position - transform.position).magnitude < 1f)
+            if((crystalPos.position - transform.position).magnitude < 1f && Input.GetKey(KeyCode.E))
             {
-
+                Recharge();
+                if(!particles.isPlaying)
+                {
+                    particles.Play();
+                }
+            }
+            else if(particles.isPlaying)
+            {
+                particles.Stop();
             }
         }
 	}
@@ -59,6 +76,12 @@ public class Torch : MonoBehaviour {
         energyRemaining = energyRemaining - amount;
     }
 
+    public void AddEnergy(float amount)
+    {
+        energyRemaining = energyRemaining + amount;
+        energyRemaining = Mathf.Clamp(energyRemaining, -50f, MAX_ENERGY);
+    }
+
     public void SetPosition(Vector2 localPos)
     {
         torch.gameObject.transform.localPosition = new Vector3(localPos.x, localPos.y, torch.gameObject.transform.localPosition.z);
@@ -66,22 +89,6 @@ public class Torch : MonoBehaviour {
 
     public void Recharge()
     {
-
-    }
-
-    IEnumerator RechargeCoroutine(Transform target)
-    {
-        while (Vector3.Distance(transform.position, target.position) > 0.05f)
-        {
-            transform.position = Vector3.Lerp(transform.position, target.position, smoothing * Time.deltaTime);
-
-            yield return null;
-        }
-
-        print("Reached the target.");
-
-        yield return new WaitForSeconds(3f);
-
-        print("MyCoroutine is now finished.");
+        AddEnergy(200f * Time.deltaTime);
     }
 }

@@ -12,7 +12,8 @@ You play as an injured astronaut whose ship has crash landed on a planet. The pl
 * Add AI for amphibious monster.
 * Add AI for eyeball monster.
 * Create bouncing effect for eyeball monster.
-* Create animations for all monsters.
+* Create animations for eyeball monster. DONE
+* Create animations for fish monster.
 * Add monster attacks.
 * Add health for player (die in three hits)
 * Add lighting for things that need it (e.g. crystals). DONE?

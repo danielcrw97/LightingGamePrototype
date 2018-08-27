@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class enemyAi : MonoBehaviour {
 
@@ -9,14 +8,11 @@ public class enemyAi : MonoBehaviour {
     private float damage;
     private Transform targat;
     private bool PlayerStatus;
-    private halth_controll HalthControll;
-    public Slider HalthBar;
 
     private void Start() {
         targat = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        HalthControll= GameObject.FindGameObjectWithTag("Player").GetComponent<halth_controll>();
         this.PlayerStatus = false;
-        HalthBar.value = HalthControll.player_halth;
+      
     }
     // Update is called once per frame
     void Update()
@@ -31,9 +27,7 @@ public class enemyAi : MonoBehaviour {
         else if(PlayerStatus == true)
         {
             Debug.Log("attack on");
-            HalthControll.player_halth -= 0.2f;
-        }
-        HalthBar.value = HalthControll.player_halth;
+        }  
     }
 
     private void OnTriggerEnter2D(Collider2D col)

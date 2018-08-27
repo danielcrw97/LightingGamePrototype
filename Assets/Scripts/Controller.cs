@@ -2,15 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /**
  * Generic character controller for a 2d sprite that can run and jump.
  */
 public class Controller : MonoBehaviour
 {
+    [Header("Events")]
+    [SerializeField]
+    private UnityEvent OnDeath;
 
     //TODO replace all magic numbers
-    //TODO do attacking in seperate component.
     //TODO fix animation when falling off small ledges.
 
     public float speed;
@@ -82,7 +85,7 @@ public class Controller : MonoBehaviour
 
     public void Die()
     {
-
+        OnDeath.Invoke();
     }
 
     private void HandleJump()

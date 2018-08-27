@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 212583237323445744}
   - component: {fileID: 114238986046311510}
   - component: {fileID: 50467938321794608}
-  - component: {fileID: 61444002264434872}
   - component: {fileID: 95980120660382704}
   - component: {fileID: 114285382959588140}
+  - component: {fileID: 61938001440892014}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 4341033936571464}
   - component: {fileID: 20043184688309028}
   - component: {fileID: 81128623719044086}
+  - component: {fileID: 114363513316245504}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -98,7 +99,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1090912228372696}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.36, y: 0.5, z: 0}
+  m_LocalPosition: {x: -2.36, y: 0.5, z: 0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4341033936571464}
@@ -157,7 +158,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 0.62299997
+  m_Mass: 0.66675246
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -166,7 +167,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61444002264434872
+--- !u!61 &61938001440892014
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,7 +179,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.008, y: -0.01}
+  m_Offset: {x: -0.0048913956, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -189,7 +190,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 0.89}
+  m_Size: {x: 0.75543404, y: 0.8826084}
   m_EdgeRadius: 0
 --- !u!81 &81128623719044086
 AudioListener:
@@ -264,6 +265,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e62c964ca2d962346a5477b5212d2615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   speed: 0
   jumpSpeed: 0
   fallingGravityMult: 0
@@ -279,7 +296,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cdb96a451dc8fb4b9b0572db0e2792f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyRemaining: 0
+  rechargeParticles: {fileID: 1687805623493198, guid: 91c1bed2dfd1f4043a6bd08faa8c5a78,
+    type: 2}
+  energyRemaining: 250
+  rechargeRate: 0
+--- !u!114 &114363513316245504
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1856830387086234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f91f54adeab25944bac606bb0fb10b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212583237323445744
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -80,6 +80,11 @@ public class Controller : MonoBehaviour
         animator.SetBool(AnimationConstants.PLAYER_FALL, rb.velocity.y < -0.01f);
     }
 
+    public void Die()
+    {
+
+    }
+
     private void HandleJump()
     {
         if (rb.velocity.y < 0f)

@@ -16,10 +16,13 @@ public class Torch : MonoBehaviour {
     public float rechargeRate;
 
     public const float MAX_ENERGY = 300f;
+    public const float DEFAULT_LIGHT_RANGE = 10f;
+    public const float MIN_LIGHT_RANGE = 2.5f;
 
     void Awake()
     {
         this.torch = GetComponentInChildren<Light>();
+        this.torch.range = DEFAULT_LIGHT_RANGE;
         List<GameObject> crystals = new List<GameObject>(GameObject.FindGameObjectsWithTag(Tags.CRYSTAL_TAG));
         crystalPositions = new List<Transform>();
         foreach(GameObject crystal in crystals)
@@ -51,13 +54,15 @@ public class Torch : MonoBehaviour {
 
         if(energyRemaining <= 0f)
         {
-            // Die
+            Controller charController = GetComponent<Controller>();
+            charController.Die();
         }
 
+        
         foreach (Transform crystalPos in crystalPositions)
         {     
             // If close enough to a crystal listen for recharging inputs. 
-            if((crystalPos.position - transform.position).magnitude < 1f && Input.GetKeyDown(KeyCode.E))
+            if((crystalPos.position - transform.position).magnitude < 1f && Input.GetKey(KeyCode.E))
             {
                 Recharge();
                 if(!particles.isPlaying)
@@ -66,10 +71,12 @@ public class Torch : MonoBehaviour {
                 }
             }
         }
-        if(particles.isPlaying && (Input.GetKeyDown(KeyCode.E)))
+        if(particles.isPlaying && (Input.GetKey(KeyCode.E)))
         {
             particles.Stop();
         }
+
+        UpdateLight();
 	}
 
     public void SapEnergy(float amount)
@@ -96,5 +103,12 @@ public class Torch : MonoBehaviour {
     public void Recharge()
     {
         AddEnergy(200f * Time.deltaTime);
+    }
+
+    private void UpdateLight()
+    {
+        float difference = DEFAULT_LIGHT_RANGE - MIN_LIGHT_RANGE;
+        float ratioOfEnergyLeft = energyRemaining / MAX_ENERGY;
+        torch.range = DEFAULT_LIGHT_RANGE - ((1 - ratioOfEnergyLeft) * difference);
     }
 }

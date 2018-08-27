@@ -65,8 +65,6 @@ public class Controller : MonoBehaviour
             animator.SetBool(AnimationConstants.PLAYER_RUN, false);
         }
 
-        float verMovement = rb.velocity.y;
-
         if (!isJumping && Input.GetKey(KeyCode.Space))
         {
             isJumping = true;
@@ -79,7 +77,7 @@ public class Controller : MonoBehaviour
         }
 
         animator.SetBool(AnimationConstants.PLAYER_JUMP, isJumping);
-        animator.SetBool(AnimationConstants.PLAYER_FALL, rb.velocity.y < 0f);
+        animator.SetBool(AnimationConstants.PLAYER_FALL, rb.velocity.y < -0.01f);
     }
 
     private void HandleJump()

@@ -11,11 +11,14 @@ public class enemyAi : MonoBehaviour {
     private Transform targat;
     private bool PlayerStatus;
     private Animator animator;
+   // private Transform transform;
+    private int x;
 
 
     private void Start() {
         this.animator = gameObject.GetComponent<Animator>();
         targat = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+      //  this.transform = gameObject.GetComponent<Transform>();
         this.PlayerStatus = false;
         animator.SetBool("spiderAttcking", false);
 
@@ -26,7 +29,7 @@ public class enemyAi : MonoBehaviour {
     {
        
         //follow player
-        if (Vector2.Distance(transform.position, targat.position) > 1 && PlayerStatus == true)
+        if (Vector2.Distance(transform.position, targat.position) > 0.8 && PlayerStatus == true)
         {
             animator.SetBool("spiderAttacking", false);
             animator.SetBool("spiderWalking", true);
@@ -58,9 +61,10 @@ public class enemyAi : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D col)
     {
+       
         if (col.gameObject.tag == "wall")
         {
-            Debug.Log("enemy try to jump small walls else retuen to patroling state");
+            Debug.Log("flip and change pos");
         }        
     }
 }

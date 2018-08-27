@@ -28,9 +28,9 @@ public class Controller : MonoBehaviour
     void Start()
     {
         this.speed = 2.5f;
-        this.jumpSpeed = 7f;
+        this.jumpSpeed = 10f;
         this.fallingGravityMult = 1.6f;
-        this.notHoldingJumpMult = 2f;
+        this.notHoldingJumpMult = 2.5f;
         this.rb = gameObject.GetComponent<Rigidbody2D>();
         this.colliderComp = gameObject.GetComponent<Collider2D>();
         this.animator = gameObject.GetComponent<Animator>();

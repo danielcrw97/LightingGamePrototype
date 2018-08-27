@@ -17,7 +17,8 @@ public class enemyAi : MonoBehaviour {
         this.animator = gameObject.GetComponent<Animator>();
         targat = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         this.PlayerStatus = false;
-        
+        animator.SetBool("spiderAttcking", false);
+
 
     }
     // Update is called once per frame
@@ -27,13 +28,14 @@ public class enemyAi : MonoBehaviour {
         //follow player
         if (Vector2.Distance(transform.position, targat.position) > 1 && PlayerStatus == true)
         {
+            animator.SetBool("spiderAttacking", false);
             animator.SetBool("spiderWalking", true);
             transform.position = Vector2.MoveTowards(transform.position, targat.position, speed * Time.deltaTime);
         }
         //Attack on player
         else if(PlayerStatus == true)
         {
-
+            animator.SetBool("spiderAttacking", true);
             Debug.Log("attack on");
         }  
     }
@@ -49,6 +51,7 @@ public class enemyAi : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D col)
     {
+        animator.SetBool("spiderWalking", false);
         Debug.Log("player out off range ");
         PlayerStatus = false;
     }

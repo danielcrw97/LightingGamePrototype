@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Idle 1_0
+  m_Name: Eyeball_Spider_Anim
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: spiderWalking
@@ -13,13 +13,13 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: spiderAttacking
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -58,7 +58,7 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &1102393615691316550
+--- !u!1102 &1102284315053373726
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
@@ -83,7 +83,7 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &1102625150295602106
+--- !u!1102 &1102760708376691348
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
@@ -118,13 +118,13 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102013247278879242}
-    m_Position: {x: 300, y: 192, z: 0}
+    m_Position: {x: 336, y: 204, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 1102625150295602106}
-    m_Position: {x: 276, y: 60, z: 0}
+    m_State: {fileID: 1102284315053373726}
+    m_Position: {x: 439, y: 161, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 1102393615691316550}
-    m_Position: {x: 372, y: 132, z: 0}
+    m_State: {fileID: 1102760708376691348}
+    m_Position: {x: 426, y: 113, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -134,4 +134,4 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 1102393615691316550}
+  m_DefaultState: {fileID: 1102013247278879242}

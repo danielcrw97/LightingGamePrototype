@@ -15,7 +15,7 @@ public class Torch : MonoBehaviour {
     public float energyRemaining;
     public float rechargeRate;
 
-    private const float MAX_ENERGY = 300f;
+    public const float MAX_ENERGY = 300f;
 
     void Awake()
     {
@@ -35,6 +35,7 @@ public class Torch : MonoBehaviour {
         this.rechargeRate = 200f;
         Instantiate(rechargeParticles, this.transform, false);
         this.particles = rechargeParticles.GetComponent<ParticleSystem>();
+        particles.Stop();
     }
 	
 	// Update is called once per frame
@@ -56,7 +57,7 @@ public class Torch : MonoBehaviour {
         foreach (Transform crystalPos in crystalPositions)
         {     
             // If close enough to a crystal listen for recharging inputs. 
-            if((crystalPos.position - transform.position).magnitude < 1f && Input.GetKey(KeyCode.E))
+            if((crystalPos.position - transform.position).magnitude < 1f && Input.GetKeyDown(KeyCode.E))
             {
                 Recharge();
                 if(!particles.isPlaying)
@@ -64,10 +65,10 @@ public class Torch : MonoBehaviour {
                     particles.Play();
                 }
             }
-            else if(particles.isPlaying)
-            {
-                particles.Stop();
-            }
+        }
+        if(particles.isPlaying && (Input.GetKeyDown(KeyCode.E)))
+        {
+            particles.Stop();
         }
 	}
 
@@ -80,6 +81,11 @@ public class Torch : MonoBehaviour {
     {
         energyRemaining = energyRemaining + amount;
         energyRemaining = Mathf.Clamp(energyRemaining, -50f, MAX_ENERGY);
+    }
+
+    public float GetEnergy()
+    {
+        return energyRemaining;
     }
 
     public void SetPosition(Vector2 localPos)

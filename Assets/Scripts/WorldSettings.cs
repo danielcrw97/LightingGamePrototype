@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorldSettings : MonoBehaviour {
 
-    private const float GRAV_MULTIPLIER = 1.1f;
+    private const float GRAV_MULTIPLIER = 1.4f;
 
 	// Use this for initialization
 	void Start () {

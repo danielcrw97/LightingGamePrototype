@@ -22,6 +22,8 @@ You play as an injured astronaut whose ship has crash landed on a planet. The pl
 * Sound effects for creatures?
 
 ### Possible future tasks-
+* Particle effects for monsters being hit.
+* Sound effects for monsters being hit/dying.
 * Platforms that only exist when light is shined on them.
 * Add traps (spikes, arrows etc.)
 * Add water

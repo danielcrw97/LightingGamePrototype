@@ -39,9 +39,11 @@ public class SpiderAI : MonoBehaviour {
 
     void Start()
     {
+        this.rb = GetComponent<Rigidbody2D>();
         this.animator = GetComponent<Animator>();
         this.rendererComp = GetComponent<SpriteRenderer>();
         this.state = State.PATROLLING;
+        this.facingRight = !rendererComp.flipX;
     }
 
     // Update is called once per frame
@@ -51,7 +53,8 @@ public class SpiderAI : MonoBehaviour {
 
     void FixedUpdate()
     {
-        this.facingRight = !rendererComp.flipX;
+        rb.velocity = new Vector2(0f, rb.velocity.y);
+        this.facingRight = rendererComp.flipX;
 
         switch(state)
         {
@@ -78,18 +81,18 @@ public class SpiderAI : MonoBehaviour {
                 Patrol();
                 break;
         }
-
+        Debug.Log(rb.velocity.x);
     }
 
     public void Move(bool moveRight)
     {
         if (moveRight)
         {
-            this.rb.velocity = Vector2.right * speed * Time.fixedDeltaTime;
+            this.rb.velocity = Vector2.right * speed;
         }
         else
         {
-            this.rb.velocity = Vector2.left * speed * Time.fixedDeltaTime;
+            this.rb.velocity = Vector2.left * speed;
         }
     }
 
@@ -106,7 +109,7 @@ public class SpiderAI : MonoBehaviour {
         }
         if(distance < 0.05f)
         {
-
+            StartCoroutine(WaitThenTurnAround(3f));
         }
         Move(facingRight);
     }
@@ -149,6 +152,7 @@ public class SpiderAI : MonoBehaviour {
     {
         state = State.IDLE;
         yield return new WaitForSeconds(seconds);
+        rendererComp.flipX = !rendererComp.flipX;
         state = State.PATROLLING;
     }
 }

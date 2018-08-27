@@ -14,9 +14,10 @@ You play as an injured astronaut whose ship has crash landed on a planet. The pl
 * Create bouncing effect for eyeball monster.
 * Create animations for all monsters.
 * Add monster attacks.
-* Add health for player (die in one hit?)
-* Add lighting for things that need it (e.g. crystals).
-* Add system where the light slowly runs out (with death/restarting).
+* Add health for player (die in three hits)
+* Add lighting for things that need it (e.g. crystals). DONE?
+* Add system where the light slowly runs out (with death/restarting). DONE
+* Set up keyboard mappings.
 
 ### Possible future tasks-
 * Add traps (spikes, arrows etc.)

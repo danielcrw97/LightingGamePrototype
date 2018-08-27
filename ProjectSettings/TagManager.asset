@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Crystal
+  - Ground
+  - wall
   layers:
   - Default
   - TransparentFX

@@ -5,15 +5,20 @@ using UnityEngine;
 
 public class enemyAi : MonoBehaviour {
 
+
     public float speed;
     private float damage;
     private Transform targat;
     private bool PlayerStatus;
+    private Animator animator;
+
 
     private void Start() {
+        this.animator = gameObject.GetComponent<Animator>();
         targat = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         this.PlayerStatus = false;
-      
+        
+
     }
     // Update is called once per frame
     void Update()
@@ -22,11 +27,13 @@ public class enemyAi : MonoBehaviour {
         //follow player
         if (Vector2.Distance(transform.position, targat.position) > 1 && PlayerStatus == true)
         {
+            animator.SetBool("spiderWalking", true);
             transform.position = Vector2.MoveTowards(transform.position, targat.position, speed * Time.deltaTime);
         }
         //Attack on player
         else if(PlayerStatus == true)
         {
+
             Debug.Log("attack on");
         }  
     }
@@ -42,7 +49,15 @@ public class enemyAi : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        Debug.Log("player out off range");
+        Debug.Log("player out off range ");
         PlayerStatus = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "wall")
+        {
+            Debug.Log("enemy try to jump small walls else retuen to patroling state");
+        }        
     }
 }

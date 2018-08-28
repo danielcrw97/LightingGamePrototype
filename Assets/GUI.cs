@@ -12,5 +12,4 @@ public class GUI : MonoBehaviour {
 	void Update () {
 		
 	}
-    public On
 }

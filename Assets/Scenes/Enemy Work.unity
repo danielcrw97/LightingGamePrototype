@@ -147,7 +147,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.0625, y: 0.0625}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -213,7 +213,7 @@ Transform:
   m_LocalScale: {x: 18, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &468299856
 GameObject:
@@ -333,7 +333,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &544667785
 GameObject:
@@ -462,7 +462,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.0625, y: 0.0625}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -631,6 +631,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 95463755363303746, guid: c873a1b68733fcb47927697326a4ef8f,
+        type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 98c8361f301b2c94aa08ed6e712636cf, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c873a1b68733fcb47927697326a4ef8f, type: 2}
   m_IsPrefabAsset: 0
@@ -647,6 +652,7 @@ GameObject:
   - component: {fileID: 1519744370}
   - component: {fileID: 1519744369}
   - component: {fileID: 1519744371}
+  - component: {fileID: 1519744372}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -725,10 +731,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e62c964ca2d962346a5477b5212d2615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   speed: 0
   jumpSpeed: 0
   fallingGravityMult: 0
   notHoldingJumpMult: 0
+  health: 0
 --- !u!61 &1519744369
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -792,3 +804,14 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1519744372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1519744365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9643363b10e3d5458e63bd986b57ca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

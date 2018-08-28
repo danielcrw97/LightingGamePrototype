@@ -9,6 +9,7 @@ public class Torch : MonoBehaviour {
 
     private ParticleSystem particles;
     private bool flipped;
+    private Animator animator;
     private Light torch;
     private SpriteRenderer rendererComp;
     private List<Transform> crystalPositions;
@@ -18,6 +19,9 @@ public class Torch : MonoBehaviour {
     public const float MAX_ENERGY = 300f;
     public const float DEFAULT_LIGHT_RANGE = 10f;
     public const float MIN_LIGHT_RANGE = 2.5f;
+
+    private bool areaAttackActive;
+    private bool coneAttackActive;
 
     void Awake()
     {
@@ -33,6 +37,7 @@ public class Torch : MonoBehaviour {
 
     void Start () {
         this.rendererComp = GetComponent<SpriteRenderer>();
+        this.animator = GetComponent<Animator>();
         this.flipped = rendererComp.flipX;
         this.energyRemaining = MAX_ENERGY;
         this.rechargeRate = 200f;
@@ -43,10 +48,11 @@ public class Torch : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
         if(flipped != rendererComp.flipX)
         {
             Vector3 torchPos = torch.gameObject.transform.localPosition;
-            torch.gameObject.transform.localPosition = new Vector3(-torchPos.x, -torchPos.y, torchPos.z);
+            torch.gameObject.transform.localPosition = new Vector3(-torchPos.x, torchPos.y, torchPos.z);
             flipped = rendererComp.flipX;
         }
 
@@ -58,10 +64,11 @@ public class Torch : MonoBehaviour {
         }
 
         
+        // Check whether the player can recharge.
         foreach (Transform crystalPos in crystalPositions)
         {     
             // If close enough to a crystal listen for recharging inputs. 
-            if((crystalPos.position - transform.position).magnitude < 1f && Input.GetKey(KeyCode.E))
+            if((crystalPos.position - transform.position).magnitude < 1f && Input.GetKey(KeyCode.R))
             {
                 Recharge();
                 if(!particles.isPlaying)
@@ -70,36 +77,58 @@ public class Torch : MonoBehaviour {
                 }
             }
         }
-        if(particles.isPlaying && (Input.GetKey(KeyCode.E)))
+        if(particles.isPlaying && (Input.GetKey(KeyCode.R)))
         {
             particles.Stop();
         }
 
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            animator.SetBool("ConeAttack", true);
+            ConeAttack();
+            coneAttackActive = true;
+        }
+        else if(animator.GetBool("ConeAttack"))
+        {
+            animator.SetBool("ConeAttack", false);
+        }
+
+        if (Input.GetKey(KeyCode.Z))
+        {
+            animator.SetTrigger(AnimationConstants.PLAYER_CIRCLULAR_ATTACK);
+        }
+
         UpdateLight();
 	}
-
-    public void SapEnergy(float amount)
-    {
-        energyRemaining = energyRemaining - amount;
-    }
-
-    public void AddEnergy(float amount)
-    {
-        energyRemaining = energyRemaining + amount;
-        energyRemaining = Mathf.Clamp(energyRemaining, -50f, MAX_ENERGY);
-    }
 
     public float GetEnergy()
     {
         return energyRemaining;
     }
 
-    public void SetPosition(Vector2 localPos)
+    private void ConeAttack()
+    {
+
+    }
+
+    private void SapEnergy(float amount)
+    {
+        energyRemaining = energyRemaining - amount;
+    }
+
+    private void AddEnergy(float amount)
+    {
+        energyRemaining = energyRemaining + amount;
+        energyRemaining = Mathf.Clamp(energyRemaining, -50f, MAX_ENERGY);
+    }
+
+    private void SetPosition(Vector2 localPos)
     {
         torch.gameObject.transform.localPosition = new Vector3(localPos.x, localPos.y, torch.gameObject.transform.localPosition.z);
     }
 
-    public void Recharge()
+    private void Recharge()
     {
         AddEnergy(200f * Time.deltaTime);
     }

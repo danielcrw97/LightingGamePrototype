@@ -83,6 +83,12 @@ public class Controller : MonoBehaviour
 
         animator.SetBool(AnimationConstants.PLAYER_JUMP, isJumping);
         animator.SetBool(AnimationConstants.PLAYER_FALL, rb.velocity.y < -0.01f);
+
+        // Coupled to attack system!
+        if (animator.GetBool("ConeAttack"))
+        {
+            rb.velocity = Vector2.zero;
+        }
     }
 
     public void Hit()

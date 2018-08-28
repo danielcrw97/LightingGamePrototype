@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 212063580785884984}
   - component: {fileID: 114652770531947358}
   - component: {fileID: 50755080327337818}
-  - component: {fileID: 95463755363303746}
   - component: {fileID: 60053143724964480}
+  - component: {fileID: 95523062671908076}
   m_Layer: 0
   m_Name: Spider
   m_TagString: Untagged
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1859546368753202}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.709, y: 0.744, z: 0}
+  m_LocalPosition: {x: 3.709, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -51,9 +51,9 @@ Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1859546368753202}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
@@ -114,7 +114,7 @@ PolygonCollider2D:
       - {x: -0.018724918, y: -0.36342943}
       - {x: 0.09558058, y: -0.26196194}
       - {x: 0.29159594, y: -0.38580078}
---- !u!95 &95463755363303746
+--- !u!95 &95523062671908076
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -123,7 +123,7 @@ Animator:
   m_GameObject: {fileID: 1859546368753202}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 56e23190a21d85842a7f552a354aef00, type: 2}
+  m_Controller: {fileID: 9100000, guid: ed0218ad753cd9c4f8ba74817abc0db2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -143,7 +143,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c2256733b4f20b4cae1ef15a168b353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  rightBarrier: {fileID: 0}
+  leftBarrier: {fileID: 0}
+  speed: 1
+  health: 0
 --- !u!212 &212063580785884984
 SpriteRenderer:
   m_ObjectHideFlags: 1

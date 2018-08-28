@@ -5,28 +5,19 @@ using UnityEngine;
 public class Attacks : MonoBehaviour {
 
     private Animator animator;
+    private Rigidbody2D rb;
  
     void Start () {
-        this.animator = gameObject.GetComponent<Animator>();
+        this.animator = GetComponent<Animator>();
+        this.rb = GetComponent<Rigidbody2D>();
     }	
-	// Update is called once per frame
-	void FixedUpdate () {
-        P_Cone_Attack();
-        P_Circlular_Attack();
+
+
+	void Update () {
     }
-    private void P_Cone_Attack()
+
+    private void ConeAttack()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            animator.SetTrigger(AnimationConstants.PLAYER_CONE_ATTACK);
-        }
-    }
-    private void P_Circlular_Attack()
-    {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            animator.SetTrigger(AnimationConstants.PLAYER_CIRCLULAR_ATTACK); 
-        }
 
     }
 }

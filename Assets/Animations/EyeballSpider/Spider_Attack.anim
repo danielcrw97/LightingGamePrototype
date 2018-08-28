@@ -5,7 +5,11 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
+<<<<<<< HEAD:Assets/Animations/EyebalSpider/Eyeball_Spider_EyeBounce.anim
+  m_Name: Eyeball_Spider_EyeBounce
+=======
   m_Name: Spider_Attack
+>>>>>>> 62fb3d0886732bdcf38897a2609dca251f4ca5d7:Assets/Animations/EyeballSpider/Spider_Attack.anim
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0

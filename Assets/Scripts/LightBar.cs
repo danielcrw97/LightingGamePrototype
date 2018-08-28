@@ -23,6 +23,6 @@ public class LightBar : MonoBehaviour {
 	void Update () {
         float energyRemaining = torch.GetEnergy();
         float value = energyRemaining / Torch.MAX_ENERGY;
-        slider.value = Mathf.Clamp(value, 0f, 1f);
+        slider.value = Mathf.Clamp(value, 0f, 1f); 
 	}
 }

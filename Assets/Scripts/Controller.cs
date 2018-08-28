@@ -2,27 +2,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /**
  * Generic character controller for a 2d sprite that can run and jump.
  */
 public class Controller : MonoBehaviour
 {
+    [Header("Events")]
+    [SerializeField]
+    private UnityEvent OnDeath;
 
     //TODO replace all magic numbers
-    //TODO do attacking in seperate component.
     //TODO fix animation when falling off small ledges.
 
     public float speed;
     public float jumpSpeed;
     public float fallingGravityMult;
     public float notHoldingJumpMult;
+    public int health;
 
     private Rigidbody2D rb;
     private Collider2D colliderComp;
     private Animator animator;
     private SpriteRenderer rendererComp;
-    private bool walkingRight;
     private bool isJumping;
 
     void Start()
@@ -31,6 +34,7 @@ public class Controller : MonoBehaviour
         this.jumpSpeed = 10f;
         this.fallingGravityMult = 1.6f;
         this.notHoldingJumpMult = 2.5f;
+        this.health = 3;
         this.rb = gameObject.GetComponent<Rigidbody2D>();
         this.colliderComp = gameObject.GetComponent<Collider2D>();
         this.animator = gameObject.GetComponent<Animator>();
@@ -47,16 +51,17 @@ public class Controller : MonoBehaviour
     {
 
         rb.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y);
-        if(rb.velocity.x < 0f)
+
+        if (rb.velocity.x < 0f && rendererComp.flipX == false)
         {
             rendererComp.flipX = true;
         }
-        else if(rb.velocity.x > 0f)
+        else if (rb.velocity.x > 0f && rendererComp.flipX == true)
         {
             rendererComp.flipX = false;
         }
 
-        if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
         {
             animator.SetBool(AnimationConstants.PLAYER_RUN, true);
         }
@@ -80,9 +85,18 @@ public class Controller : MonoBehaviour
         animator.SetBool(AnimationConstants.PLAYER_FALL, rb.velocity.y < -0.01f);
     }
 
+    public void Hit()
+    {
+        health--;
+        if(health == 0)
+        {
+            Die();
+        }
+    }
+
     public void Die()
     {
-
+        OnDeath.Invoke();
     }
 
     private void HandleJump()

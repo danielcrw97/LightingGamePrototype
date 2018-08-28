@@ -54,8 +54,7 @@ public class Torch : MonoBehaviour {
 
         if(energyRemaining <= 0f)
         {
-            Controller charController = GetComponent<Controller>();
-            charController.Die();
+            gameObject.SendMessage("Die", null, SendMessageOptions.DontRequireReceiver);
         }
 
         

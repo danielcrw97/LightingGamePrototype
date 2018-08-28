@@ -87,6 +87,7 @@ public class Controller : MonoBehaviour
 
     public void Hit()
     {
+        Debug.Log("Hit");
         health--;
         if(health == 0)
         {
@@ -96,6 +97,7 @@ public class Controller : MonoBehaviour
 
     public void Die()
     {
+        Debug.Log("Dead");
         // Lights go out etc.
         OnDeath.Invoke();
     }

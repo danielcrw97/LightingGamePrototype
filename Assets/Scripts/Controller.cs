@@ -96,6 +96,7 @@ public class Controller : MonoBehaviour
 
     public void Die()
     {
+        // Lights go out etc.
         OnDeath.Invoke();
     }
 

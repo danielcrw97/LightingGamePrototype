@@ -20,7 +20,7 @@ public class Controller : MonoBehaviour
     public float jumpSpeed;
     public float fallingGravityMult;
     public float notHoldingJumpMult;
-    public int health;
+    public byte health;
 
     private Rigidbody2D rb;
     private Collider2D colliderComp;
@@ -84,8 +84,9 @@ public class Controller : MonoBehaviour
         animator.SetBool(AnimationConstants.PLAYER_JUMP, isJumping);
         animator.SetBool(AnimationConstants.PLAYER_FALL, rb.velocity.y < -0.01f);
 
-        // Coupled to attack system!
-        if (animator.GetBool(AnimationConstants.PLAYER_AREA_ATTACK))
+        // Coupled to attack system! Add lock movement function!
+        if (animator.GetBool(AnimationConstants.PLAYER_AREA_ATTACK) || 
+                (animator.GetBool("ConeAttack") && !isJumping))
         {
             rb.velocity = Vector2.zero;
         }
@@ -103,7 +104,6 @@ public class Controller : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log("Dead");
         // Lights go out etc.
         OnDeath.Invoke();
     }

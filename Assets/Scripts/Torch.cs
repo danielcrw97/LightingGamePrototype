@@ -25,28 +25,41 @@ public class Torch : MonoBehaviour {
 
     private ParticleSystem particles;
     private Animator animator;
-    private Light torch;
+    private Light pointLight;
+    private Light spotLight;
     private SpriteRenderer rendererComp;
     private List<Transform> crystalPositions;
-    private Vector3 initialTorchPos;
     private Controller playerController;
     public TorchState state;
     public float energyRemaining;
 
+    // Torch constants.
     public const float rechargeRate = 200f;
     public const float MAX_ENERGY = 300f;
     public const float DEFAULT_LIGHT_RANGE = 10f;
     public const float MIN_LIGHT_RANGE = 2.5f;
     private const float AREA_ATTACK_TORCH_RANGE = 50f;
-    private static Vector3 AREA_ATTACK_TORCH_POS = new Vector3(-0.02f, 0.405f, -4f);
+    private const String POINT_LIGHT_OBJ_NAME = "TorchPointLight";
+    private const String SPOT_LIGHT_OBJ_NAME = "TorchSpotLight";
+    private static readonly Vector3 INIT_TORCH_POS = new Vector3(0.29f, 0.2f, -1f);
+    private static readonly Vector3 AREA_ATTACK_TORCH_POS = new Vector3(-0.02f, 0.405f, -4f);
+    private static readonly Vector3 SPOTLIGHT_INIT_POS = new Vector3(-0.18f, 0.13f, -0.16f);
+    private static readonly Vector3 SPOTLIGHT_LEFT_POS = new Vector3(0.615f, 0.17f, -0.16f);
+    private static readonly Vector3 SPOTLIGHT_UP_RIGHT_POS = new Vector3(-0.439f, -0.57f, -0.16f);
+    private static readonly Vector3 SPOTLIGHT_UP_LEFT_POS = new Vector3(0.41f, -0.61f, -0.16f);
+    private static readonly Vector3 SPOTLIGHT_DOWN_RIGHT_POS = new Vector3(-0.514f, 0.944f, -0.16f);
+    private static readonly Vector3 SPOTLIGHT_DOWN_LEFT_POS = new Vector3(0.494f, 0.911f, -0.16f);
 
     //TODO FIX PARTICLE SYSTEM
 
     void Awake()
     {
-        this.torch = GetComponentInChildren<Light>();
-        this.torch.range = DEFAULT_LIGHT_RANGE;
-        initialTorchPos = torch.transform.localPosition;
+        this.pointLight = transform.Find(POINT_LIGHT_OBJ_NAME).GetComponent<Light>();
+        this.spotLight = transform.Find(SPOT_LIGHT_OBJ_NAME).GetComponent<Light>();
+        pointLight.gameObject.transform.localPosition = INIT_TORCH_POS;
+        spotLight.gameObject.transform.localPosition = SPOTLIGHT_INIT_POS;
+        this.pointLight.range = DEFAULT_LIGHT_RANGE;
+
         List<GameObject> crystals = new List<GameObject>(GameObject.FindGameObjectsWithTag(Tags.CRYSTAL_TAG));
         crystalPositions = new List<Transform>();
         foreach(GameObject crystal in crystals)
@@ -68,7 +81,6 @@ public class Torch : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        UpdateState();
 
         switch(state)
         {
@@ -89,9 +101,19 @@ public class Torch : MonoBehaviour {
                 break;
         }
 
+        if (energyRemaining <= 0f)
+        {
+            pointLight.enabled = false;
+            spotLight.enabled = false;
+            gameObject.SendMessage("Die", null, SendMessageOptions.DontRequireReceiver);
+        }
     }
 
     private void UpdateState()
+    {
+    }
+
+    private void NormalTorch()
     {
         // Transition to Area
         if (Input.GetKey(KeyCode.E) && (!playerController.IsJumping()))
@@ -105,32 +127,21 @@ public class Torch : MonoBehaviour {
         KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
         if (input != KeyCode.None)
         {
+            spotLight.enabled = true;
+            pointLight.enabled = false;
             state = TorchState.Cone;
             ConeTorch();
             return;
         }
 
-        state 
-    }
-
-    private void NormalTorch()
-    {
-
         if (rendererComp.flipX)
         {
-            torch.gameObject.transform.localPosition = new Vector3(-initialTorchPos.x, initialTorchPos.y, initialTorchPos.z);
+            pointLight.gameObject.transform.localPosition = new Vector3(-INIT_TORCH_POS.x, INIT_TORCH_POS.y, INIT_TORCH_POS.z);
         }
         else
         {
-            torch.gameObject.transform.localPosition = initialTorchPos;
+            pointLight.gameObject.transform.localPosition = INIT_TORCH_POS;
         }
-
-        if (energyRemaining <= 0f)
-        {
-            torch.enabled = false;
-            gameObject.SendMessage("Die", null, SendMessageOptions.DontRequireReceiver);
-        }
-
 
         // Check whether the player can recharge.
         foreach (Transform crystalPos in crystalPositions)
@@ -157,9 +168,12 @@ public class Torch : MonoBehaviour {
 
     private void AreaTorch()
     {
+        // Transition to cone.
         KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
         if (input != KeyCode.None)
         {
+            spotLight.enabled = true;
+            pointLight.enabled = false;
             state = TorchState.Cone;
             ConeTorch();
             return;
@@ -176,8 +190,8 @@ public class Torch : MonoBehaviour {
         if (!animator.GetBool(AnimationConstants.PLAYER_AREA_ATTACK))
         {
             animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, true);
-            torch.transform.localPosition = AREA_ATTACK_TORCH_POS;
-            torch.range = AREA_ATTACK_TORCH_RANGE;
+            pointLight.transform.localPosition = AREA_ATTACK_TORCH_POS;
+            pointLight.range = AREA_ATTACK_TORCH_RANGE;
         }
 
         energyRemaining -= (3 * Time.deltaTime);
@@ -188,16 +202,55 @@ public class Torch : MonoBehaviour {
         KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
         if (input != KeyCode.None)
         {
-            if(!animator.GetBool("ConeAttack"))
+            if (!animator.GetBool("ConeAttack"))
             {
                 animator.SetBool("ConeAttack", true);
+                spotLight.enabled = true;
             }
-            state = TorchState.Cone;
-            ConeDirection direction;
-        
+            switch (input)
+            {
+                case KeyCode.RightArrow:
+                    rendererComp.flipX = false;
+                    spotLight.transform.localRotation = Quaternion.Euler(0f, 85f, 0f);
+                    spotLight.transform.localPosition = SPOTLIGHT_INIT_POS;
+                    break;
+
+                case KeyCode.LeftArrow:
+                    rendererComp.flipX = true;
+                    spotLight.transform.eulerAngles = new Vector3(180f, 85f, 0f);
+                    spotLight.transform.localPosition = SPOTLIGHT_LEFT_POS;
+                    break;
+
+                case KeyCode.UpArrow:
+                    spotLight.transform.eulerAngles = new Vector3(-90f, 85f, 0f);
+                    if(rendererComp.flipX)
+                    {
+                        spotLight.transform.localPosition = SPOTLIGHT_UP_RIGHT_POS;
+                    }
+                    else
+                    {
+                        spotLight.transform.localPosition = SPOTLIGHT_UP_LEFT_POS;
+                    }
+                    break;
+
+                case KeyCode.DownArrow:
+                    spotLight.transform.eulerAngles = new Vector3(90f, 85f, 0f);
+                    if (rendererComp.flipX)
+                    {
+                        spotLight.transform.localPosition = SPOTLIGHT_DOWN_RIGHT_POS;
+                    }
+                    else
+                    {
+                        spotLight.transform.localPosition = SPOTLIGHT_DOWN_LEFT_POS;
+                    }
+                    break;
+            }        
         }
         else
         {
+            spotLight.enabled = false;
+            pointLight.enabled = true;
+            animator.SetBool("ConeAttack", false);
             state = TorchState.Normal;
             NormalTorch();
             return;
@@ -222,7 +275,7 @@ public class Torch : MonoBehaviour {
 
     private void SetPosition(Vector2 localPos)
     {
-        torch.gameObject.transform.localPosition = new Vector3(localPos.x, localPos.y, torch.gameObject.transform.localPosition.z);
+        pointLight.gameObject.transform.localPosition = new Vector3(localPos.x, localPos.y, pointLight.gameObject.transform.localPosition.z);
     }
 
     private void Recharge()
@@ -234,6 +287,6 @@ public class Torch : MonoBehaviour {
     {
         float difference = DEFAULT_LIGHT_RANGE - MIN_LIGHT_RANGE;
         float ratioOfEnergyLeft = energyRemaining / MAX_ENERGY;
-        torch.range = DEFAULT_LIGHT_RANGE - ((1 - ratioOfEnergyLeft) * difference);
+        pointLight.range = DEFAULT_LIGHT_RANGE - ((1 - ratioOfEnergyLeft) * difference);
     }
 }

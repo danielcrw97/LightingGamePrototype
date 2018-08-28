@@ -20,7 +20,8 @@ You play as an injured astronaut whose ship has crash landed on a planet. The pl
 * Add system where the light slowly runs out (with death/restarting). DONE
 * Set up keyboard mappings.
 * Sound effects for creatures?
-* * Attacking in mid-air (to bounce off eyeballs)
+* Attacking in mid-air (to bounce off eyeballs)
+* Smooth camera
 
 ### Possible future tasks-
 * Particle effects for monsters being hit.

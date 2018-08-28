@@ -61,7 +61,7 @@ public class Controller : MonoBehaviour
             rendererComp.flipX = false;
         }
 
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             animator.SetBool(AnimationConstants.PLAYER_RUN, true);
         }

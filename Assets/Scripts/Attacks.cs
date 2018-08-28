@@ -14,6 +14,7 @@ public class Attacks : MonoBehaviour {
 
 
 	void Update () {
+
     }
 
     private void ConeAttack()

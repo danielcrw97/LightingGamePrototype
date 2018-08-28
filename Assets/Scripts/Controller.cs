@@ -85,7 +85,7 @@ public class Controller : MonoBehaviour
         animator.SetBool(AnimationConstants.PLAYER_FALL, rb.velocity.y < -0.01f);
 
         // Coupled to attack system!
-        if (animator.GetBool("ConeAttack"))
+        if (animator.GetBool(AnimationConstants.PLAYER_AREA_ATTACK))
         {
             rb.velocity = Vector2.zero;
         }
@@ -130,7 +130,7 @@ public class Controller : MonoBehaviour
         {
             Vector2 midBottom = new Vector2(colliderComp.bounds.center.x, colliderComp.bounds.min.y - 0.1f);
             RaycastHit2D rayHit = Physics2D.Raycast(midBottom, Vector2.down);
-            if (rayHit != null && rayHit.distance < 0.01f)
+            if ((rayHit != null) && rayHit.distance < 0.01f)
             {
                 isJumping = false;
                 animator.SetBool(AnimationConstants.PLAYER_JUMP, false);
@@ -143,5 +143,10 @@ public class Controller : MonoBehaviour
     {
         float terminalVelocity = 5.0f;
         return Mathf.Clamp(speed, -terminalVelocity, terminalVelocity);
+    }
+
+    public bool IsJumping()
+    {
+        return isJumping;
     }
 }

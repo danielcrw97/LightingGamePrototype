@@ -11,6 +11,14 @@ public class Torch : MonoBehaviour {
         Cone
     }
 
+    enum ConeDirection
+    {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
+    }
+
     [SerializeField]
     private GameObject rechargeParticles;
 
@@ -20,6 +28,7 @@ public class Torch : MonoBehaviour {
     private SpriteRenderer rendererComp;
     private List<Transform> crystalPositions;
     private Vector3 initialTorchPos;
+    private Controller playerController;
     private TorchState state;
     public float energyRemaining;
 
@@ -29,10 +38,6 @@ public class Torch : MonoBehaviour {
     public const float MIN_LIGHT_RANGE = 2.5f;
     private const float AREA_ATTACK_TORCH_RANGE = 50f;
     private static Vector3 AREA_ATTACK_TORCH_POS = new Vector3(-0.02f, 0.405f, -4f);
-   
-
-    private bool areaAttackActive;
-    private bool coneAttackActive;
 
     //TODO FIX PARTICLE SYSTEM
 
@@ -40,7 +45,7 @@ public class Torch : MonoBehaviour {
     {
         this.torch = GetComponentInChildren<Light>();
         this.torch.range = DEFAULT_LIGHT_RANGE;
-        initialTorchPos = this.transform.localPosition;
+        initialTorchPos = torch.transform.localPosition;
         List<GameObject> crystals = new List<GameObject>(GameObject.FindGameObjectsWithTag(Tags.CRYSTAL_TAG));
         crystalPositions = new List<Transform>();
         foreach(GameObject crystal in crystals)
@@ -50,6 +55,7 @@ public class Torch : MonoBehaviour {
     }
 
     void Start () {
+        this.playerController = GetComponent<Controller>();
         this.rendererComp = GetComponent<SpriteRenderer>();
         this.animator = GetComponent<Animator>();
         this.energyRemaining = MAX_ENERGY;
@@ -81,27 +87,29 @@ public class Torch : MonoBehaviour {
     private void NormalTorch()
     {
         // Transition to Area
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) && (!playerController.IsJumping()))
         {
             state = TorchState.Area;
+            AreaTorch();
             return;
         }
 
         // Transition to Cone
-        if (Input.GetKey(KeyCode.Z))
+        KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
+        if (input != KeyCode.None)
         {
-            if (!animator.GetBool("ConeAttack"))
-            {
-                animator.SetBool("ConeAttack", true);
-            }
             state = TorchState.Cone;
+            ConeTorch();
             return;
         }
 
         if (rendererComp.flipX)
         {
-            Vector3 torchPos = initialTorchPos;
-            torch.gameObject.transform.localPosition = new Vector3(-torchPos.x, torchPos.y, torchPos.z);
+            torch.gameObject.transform.localPosition = new Vector3(-initialTorchPos.x, initialTorchPos.y, initialTorchPos.z);
+        }
+        else
+        {
+            torch.gameObject.transform.localPosition = initialTorchPos;
         }
 
         if (energyRemaining <= 0f)
@@ -138,28 +146,40 @@ public class Torch : MonoBehaviour {
     {
         if(!Input.GetKey(KeyCode.E))
         {
-            animator.SetBool("AreaAttack", false);
+            animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, false);
             state = TorchState.Normal;
             NormalTorch();
             return;
         }
 
-        if (!animator.GetBool("AreaAttack"))
+        if (!animator.GetBool(AnimationConstants.PLAYER_AREA_ATTACK))
         {
-            animator.SetBool("AreaAttack", true);
+            animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, true);
             torch.transform.localPosition = AREA_ATTACK_TORCH_POS;
             torch.range = AREA_ATTACK_TORCH_RANGE;
         }
+
+        energyRemaining -= (3 * Time.deltaTime);
     }
 
     private void ConeTorch()
     {
-        if (!Input.GetKey(KeyCode.Z))
+        KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
+        if (input != KeyCode.None)
+        {
+            state = TorchState.Cone;
+            ConeDirection direction;
+            if (input == KeyCode.UpArrow)
+            {
+
+            }
+        }
+        else
         {
             state = TorchState.Normal;
+            NormalTorch();
             return;
         }
-
     }
 
     public float GetEnergy()

@@ -6,18 +6,18 @@ using UnityEngine;
 
 public static class InputUtils
 {
-    public static bool CheckForMultipleInputs(params KeyCode[] keys)
+    public static KeyCode CheckForMultipleInputs(params KeyCode[] keys)
     {
-        bool flag = false;
+        KeyCode code = KeyCode.None;
         foreach(KeyCode key in keys)
         {
             if(Input.GetKey(key))
             {
-                flag = true;
+                code = key;
                 break;
             }
         }
-        return flag;
+        return code;
     }
 }
 

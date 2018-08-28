@@ -28,7 +28,11 @@ public class SpiderAI : MonoBehaviour {
     private Transform target;
     private Animator animator;
     private State state;
+
+    // Flags
     private bool facingRight;
+    private bool cantAttack;
+    private bool waiting;
 
     private const float ATTACK_DISTANCE = 1.3f;
     private const float SPIDER_RANGE = 5f;
@@ -44,12 +48,18 @@ public class SpiderAI : MonoBehaviour {
         this.rendererComp = GetComponent<SpriteRenderer>();
         this.state = State.PATROLLING;
         this.facingRight = rendererComp.flipX;
+
+        this.cantAttack = false;
+        this.waiting = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+        if(health <= 0f)
+        {
+           
+        }
     }
 
     void FixedUpdate()
@@ -76,12 +86,15 @@ public class SpiderAI : MonoBehaviour {
                 break;
 
             case State.IDLE:
+                Idle();
                 break;
 
             default:
                 Patrol();
                 break;
         }
+
+        animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
     }
 
     public void Move(bool moveRight)
@@ -109,11 +122,11 @@ public class SpiderAI : MonoBehaviour {
         }
         if(distance < 0.05f)
         {
-            StartCoroutine(WaitThenTurnAround(3f, State.PATROLLING));
+            StartCoroutine(WaitThenTurnAround(3f));
         }
         Move(facingRight);
         
-        if(canTargetPlayer())
+        if(CanTargetPlayer())
         {
             state = State.CHASING;
         }
@@ -121,26 +134,37 @@ public class SpiderAI : MonoBehaviour {
 
     private void Chase()
     {
-        if(!canTargetPlayer())
+        if(waiting)
+        {
+            return;
+        }
+        
+        if(IsPlayerBeyondLimits())
         {
             state = State.PATROLLING;
             return;
         }
+        
 
         float targetDistance = target.position.x - transform.position.x;
         bool targetIsRight = targetDistance >= 0f;
         if(targetIsRight == facingRight)
         {
+            
             if((Mathf.Abs(targetDistance) < ATTACK_DISTANCE))
             {
-                state = State.ATTACKING;
+                if(!cantAttack)
+                {
+                    state = State.ATTACKING;
+                }
                 return;
             }
+            
             Move(facingRight);
         }
         else
         {
-            StartCoroutine(WaitThenTurnAround(0.5f, State.CHASING));
+            StartCoroutine(DelayFlipWhileChasing(0.4f));
         }
     }
 
@@ -156,6 +180,7 @@ public class SpiderAI : MonoBehaviour {
     {
         state = State.CHASING;
         animator.SetBool("Attacking", false);
+        DelayAttack(1f);
     }
 
     private void Immobilize()
@@ -163,27 +188,54 @@ public class SpiderAI : MonoBehaviour {
 
     }
 
+    private void Idle()
+    {
+        if(CanTargetPlayer())
+        {
+            state = State.CHASING;
+        }
+    }
+
     private void CheckForLedge()
     {
 
     }
 
-    private bool canTargetPlayer()
+    private bool CanTargetPlayer()
     {
         // If the spider can sense the players and he is not beyond the spiders limits - go for it!
-        bool canSense = (Mathf.Abs(target.transform.position.x - transform.position.x)) < SPIDER_RANGE;
+        bool canSense = ((target.transform.position - transform.position).magnitude) < SPIDER_RANGE;
         bool isBeyondLimits = (target.transform.position.x < leftBarrier.transform.position.x) ||
             (target.transform.position.x > rightBarrier.transform.position.x);
         return canSense && !isBeyondLimits;
     }
 
-    private IEnumerator WaitThenTurnAround(float seconds, State newState)
+    private bool IsPlayerBeyondLimits()
+    {
+        return (target.transform.position.x < leftBarrier.transform.position.x) ||
+            (target.transform.position.x > rightBarrier.transform.position.x);
+    }
+
+    private IEnumerator WaitThenTurnAround(float seconds)
     {
         state = State.IDLE;
         yield return new WaitForSeconds(seconds);
         rendererComp.flipX = !rendererComp.flipX;
-        state = newState;
+        state = State.PATROLLING;
     }
 
-    
+    private IEnumerator DelayFlipWhileChasing(float seconds)
+    {
+        waiting = true;
+        yield return new WaitForSeconds(seconds);
+        rendererComp.flipX = !rendererComp.flipX;
+        waiting = false;
+    }
+
+    private IEnumerator DelayAttack(float seconds)
+    {
+        cantAttack = true;
+        yield return new WaitForSeconds(seconds);
+        cantAttack = false;
+    }
 }

@@ -21,7 +21,7 @@ You play as an injured astronaut whose ship has crash landed on a planet. The pl
 * Set up keyboard mappings.
 * Sound effects for creatures?
 * Attacking in mid-air (to bounce off eyeballs)
-* Smooth camera
+* Smooth camera DONE
 
 ### Possible future tasks-
 * Particle effects for monsters being hit.

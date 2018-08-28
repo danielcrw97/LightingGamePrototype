@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Torch : MonoBehaviour {
 
-    enum TorchState
+    public enum TorchState
     {
         Normal,
         Area,
@@ -29,7 +30,7 @@ public class Torch : MonoBehaviour {
     private List<Transform> crystalPositions;
     private Vector3 initialTorchPos;
     private Controller playerController;
-    private TorchState state;
+    public TorchState state;
     public float energyRemaining;
 
     public const float rechargeRate = 200f;
@@ -67,6 +68,8 @@ public class Torch : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        UpdateState();
+
         switch(state)
         {
             case TorchState.Normal:
@@ -80,11 +83,15 @@ public class Torch : MonoBehaviour {
             case TorchState.Cone:
                 ConeTorch();
                 break;
+
+            default:
+                NormalTorch();
+                break;
         }
 
     }
 
-    private void NormalTorch()
+    private void UpdateState()
     {
         // Transition to Area
         if (Input.GetKey(KeyCode.E) && (!playerController.IsJumping()))
@@ -102,6 +109,12 @@ public class Torch : MonoBehaviour {
             ConeTorch();
             return;
         }
+
+        state 
+    }
+
+    private void NormalTorch()
+    {
 
         if (rendererComp.flipX)
         {
@@ -144,7 +157,15 @@ public class Torch : MonoBehaviour {
 
     private void AreaTorch()
     {
-        if(!Input.GetKey(KeyCode.E))
+        KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
+        if (input != KeyCode.None)
+        {
+            state = TorchState.Cone;
+            ConeTorch();
+            return;
+        }
+
+        if (Input.GetKeyUp(KeyCode.E))
         {
             animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, false);
             state = TorchState.Normal;
@@ -167,12 +188,13 @@ public class Torch : MonoBehaviour {
         KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
         if (input != KeyCode.None)
         {
+            if(!animator.GetBool("ConeAttack"))
+            {
+                animator.SetBool("ConeAttack", true);
+            }
             state = TorchState.Cone;
             ConeDirection direction;
-            if (input == KeyCode.UpArrow)
-            {
-
-            }
+        
         }
         else
         {

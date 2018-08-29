@@ -130,7 +130,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 256
+        width: 448
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -139,7 +139,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 77a70887e9d00364692be4e131c30850
+      spriteID: f7c8d87c24fb3174196f305c721076a7
       vertices: []
       indices: 
       edges: []
@@ -148,9 +148,9 @@ TextureImporter:
       name: AttackSH_1
       rect:
         serializedVersion: 2
-        x: 256
+        x: 448
         y: 0
-        width: 256
+        width: 448
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -159,7 +159,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b0cf48481f0191f40bb04b9a14c8ec37
+      spriteID: 2e57a45d70439964b8db177ec5e0c3c2
       vertices: []
       indices: 
       edges: []
@@ -168,9 +168,9 @@ TextureImporter:
       name: AttackSH_2
       rect:
         serializedVersion: 2
-        x: 512
+        x: 896
         y: 0
-        width: 256
+        width: 448
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -179,7 +179,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d56001ec0223cb4395b5baef0c7ed01
+      spriteID: c9b5c5d0b57c1f844b9b1d322071e515
       vertices: []
       indices: 
       edges: []
@@ -188,9 +188,9 @@ TextureImporter:
       name: AttackSH_3
       rect:
         serializedVersion: 2
-        x: 768
+        x: 1344
         y: 0
-        width: 256
+        width: 448
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -199,7 +199,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 19176220ec5013f4abfe512c21c943fe
+      spriteID: b6d363f5db5f53246afd995c44ce4883
       vertices: []
       indices: 
       edges: []
@@ -208,9 +208,9 @@ TextureImporter:
       name: AttackSH_4
       rect:
         serializedVersion: 2
-        x: 1024
+        x: 1792
         y: 0
-        width: 256
+        width: 448
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -219,7 +219,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 272e50d55a58c4440b14ff2cc81ff12c
+      spriteID: 45ecd62641b8ab44e84763a30c40bd75
       vertices: []
       indices: 
       edges: []
@@ -228,9 +228,9 @@ TextureImporter:
       name: AttackSH_5
       rect:
         serializedVersion: 2
-        x: 1280
+        x: 2240
         y: 0
-        width: 256
+        width: 448
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -239,7 +239,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 95966a7d6947d1e4cb80469571d0dcc7
+      spriteID: efc5c49c3612cd34ea308819412c8a50
       vertices: []
       indices: 
       edges: []
@@ -248,9 +248,9 @@ TextureImporter:
       name: AttackSH_6
       rect:
         serializedVersion: 2
-        x: 1536
+        x: 2688
         y: 0
-        width: 256
+        width: 448
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -259,7 +259,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e541757701045c044a25a0e411ef6e48
+      spriteID: abea373cc61969045a4a772ce4c31079
       vertices: []
       indices: 
       edges: []
@@ -268,9 +268,9 @@ TextureImporter:
       name: AttackSH_7
       rect:
         serializedVersion: 2
-        x: 1792
+        x: 3136
         y: 0
-        width: 256
+        width: 448
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -279,7 +279,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5706e67084091140bc6ea5ff2277103
+      spriteID: e747e5a93358caa46a19e4d5bdba5fd1
       vertices: []
       indices: 
       edges: []
@@ -287,7 +287,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 50247d2e9643afb48b7b37533ed98ba2
+    spriteID: c3f9f1cfc43e177468466c96f0adf207
     vertices: []
     indices: 
     edges: []

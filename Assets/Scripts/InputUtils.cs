@@ -6,6 +6,7 @@ using UnityEngine;
 
 public static class InputUtils
 {
+    // Check if any of the inputs given are being pressed, and returns the one that is. Otherwise returns KeyCode.None
     public static KeyCode CheckForMultipleInputs(params KeyCode[] keys)
     {
         KeyCode code = KeyCode.None;

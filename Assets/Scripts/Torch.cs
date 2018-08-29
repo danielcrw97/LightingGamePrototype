@@ -38,17 +38,18 @@ public class Torch : MonoBehaviour {
     public const float MAX_ENERGY = 300f;
     public const float DEFAULT_LIGHT_RANGE = 10f;
     public const float MIN_LIGHT_RANGE = 2.5f;
-    private const float AREA_ATTACK_TORCH_RANGE = 50f;
+    private const float AREA_ATTACK_TORCH_STRENGTH = 50f;
+    private const float AREA_ATTACK_TORCH_RANGE = 7f;
+    private const float AREA_ATTACK_LIGHT_USAGE = 10f;
+    private const float CONE_ATTACK_TORCH_RANGE = 10f;
+    private const float CONE_ATTACK_LIGHT_USAGE = 3f;
     private const String POINT_LIGHT_OBJ_NAME = "TorchPointLight";
     private const String SPOT_LIGHT_OBJ_NAME = "TorchSpotLight";
     private static readonly Vector3 INIT_TORCH_POS = new Vector3(0.29f, 0.2f, -1f);
     private static readonly Vector3 AREA_ATTACK_TORCH_POS = new Vector3(-0.02f, 0.405f, -4f);
-    private static readonly Vector3 SPOTLIGHT_INIT_POS = new Vector3(-0.18f, 0.13f, -0.16f);
-    private static readonly Vector3 SPOTLIGHT_LEFT_POS = new Vector3(0.615f, 0.17f, -0.16f);
-    private static readonly Vector3 SPOTLIGHT_UP_RIGHT_POS = new Vector3(-0.439f, -0.57f, -0.16f);
-    private static readonly Vector3 SPOTLIGHT_UP_LEFT_POS = new Vector3(0.41f, -0.61f, -0.16f);
-    private static readonly Vector3 SPOTLIGHT_DOWN_RIGHT_POS = new Vector3(-0.514f, 0.944f, -0.16f);
-    private static readonly Vector3 SPOTLIGHT_DOWN_LEFT_POS = new Vector3(0.494f, 0.911f, -0.16f);
+    private static readonly Vector3 SPOTLIGHT_INIT_POS = new Vector3(-0.32f, 0.139f, -0.16f);
+    private static readonly Vector3 SPOTLIGHT_DOWN_POS = new Vector3(0.52f, 0.91f, -0.16f);
+    private static readonly Vector3 SPOTLIGHT_UP_POS = new Vector3(0.52f, -0.8f, -0.16f);
 
     //TODO FIX PARTICLE SYSTEM
 
@@ -191,10 +192,19 @@ public class Torch : MonoBehaviour {
         {
             animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, true);
             pointLight.transform.localPosition = AREA_ATTACK_TORCH_POS;
-            pointLight.range = AREA_ATTACK_TORCH_RANGE;
+            pointLight.range = AREA_ATTACK_TORCH_STRENGTH;
         }
 
-        energyRemaining -= (3 * Time.deltaTime);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(pointLight.transform.position, AREA_ATTACK_TORCH_RANGE);
+        foreach(Collider2D hit in hits)
+        {
+            if(hit.gameObject.tag == Tags.ENEMY_TAG)
+            {
+                hit.gameObject.SendMessage("HitByLight", TorchTypes.AREA, SendMessageOptions.DontRequireReceiver);
+            }
+        }
+
+        energyRemaining -= (AREA_ATTACK_LIGHT_USAGE * Time.deltaTime);
     }
 
     private void ConeTorch()
@@ -202,55 +212,76 @@ public class Torch : MonoBehaviour {
         KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
         if (input != KeyCode.None)
         {
-            if (!animator.GetBool("ConeAttack"))
+            if (!animator.GetBool(AnimationConstants.PLAYER_CONE_ATTACK))
             {
-                animator.SetBool("ConeAttack", true);
+                animator.SetBool(AnimationConstants.PLAYER_CONE_ATTACK, true);
                 spotLight.enabled = true;
             }
+
+            int numberOfRays = 10;
+            float rayAngle = spotLight.spotAngle;
+
             switch (input)
             {
                 case KeyCode.RightArrow:
                     rendererComp.flipX = false;
-                    spotLight.transform.localRotation = Quaternion.Euler(0f, 85f, 0f);
+                    spotLight.transform.eulerAngles = new Vector3(0f, 90f, 0f);
                     spotLight.transform.localPosition = SPOTLIGHT_INIT_POS;
                     break;
 
                 case KeyCode.LeftArrow:
                     rendererComp.flipX = true;
-                    spotLight.transform.eulerAngles = new Vector3(180f, 85f, 0f);
-                    spotLight.transform.localPosition = SPOTLIGHT_LEFT_POS;
+                    spotLight.transform.eulerAngles = new Vector3(180f, 90f, 0f);
+                    spotLight.transform.localPosition = new Vector3(-SPOTLIGHT_INIT_POS.x, SPOTLIGHT_INIT_POS.y, SPOTLIGHT_INIT_POS.z);
                     break;
 
                 case KeyCode.UpArrow:
-                    spotLight.transform.eulerAngles = new Vector3(-90f, 85f, 0f);
+                    spotLight.transform.eulerAngles = new Vector3(-90f, 90f, 0f);
                     if(rendererComp.flipX)
                     {
-                        spotLight.transform.localPosition = SPOTLIGHT_UP_RIGHT_POS;
+                        spotLight.transform.localPosition = new Vector3(-SPOTLIGHT_UP_POS.x, SPOTLIGHT_UP_POS.y, SPOTLIGHT_UP_POS.z);
                     }
                     else
                     {
-                        spotLight.transform.localPosition = SPOTLIGHT_UP_LEFT_POS;
+                        spotLight.transform.localPosition = SPOTLIGHT_UP_POS;
                     }
                     break;
 
                 case KeyCode.DownArrow:
-                    spotLight.transform.eulerAngles = new Vector3(90f, 85f, 0f);
+                    spotLight.transform.eulerAngles = new Vector3(90f, 90f, 0f);
                     if (rendererComp.flipX)
                     {
-                        spotLight.transform.localPosition = SPOTLIGHT_DOWN_RIGHT_POS;
+                        spotLight.transform.localPosition = new Vector3(-SPOTLIGHT_DOWN_POS.x, SPOTLIGHT_DOWN_POS.y, SPOTLIGHT_DOWN_POS.z);
                     }
                     else
                     {
-                        spotLight.transform.localPosition = SPOTLIGHT_DOWN_LEFT_POS;
+                        spotLight.transform.localPosition = SPOTLIGHT_DOWN_POS;
                     }
                     break;
-            }        
+            }
+
+            float distanceBetweenRays = rayAngle / numberOfRays;
+            float angleHalved = rayAngle / 2;
+            for(float angle=-angleHalved; angle<angleHalved; angle += distanceBetweenRays)
+            {
+                float worldAngle = spotLight.transform.eulerAngles.x + angle;
+              
+                Vector2 direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * worldAngle), Mathf.Sin(Mathf.Deg2Rad * worldAngle));
+                RaycastHit2D hit = Physics2D.Raycast(spotLight.transform.position, direction, CONE_ATTACK_TORCH_RANGE);
+                GameObject hitObject = hit.collider.gameObject;
+                if((hitObject.tag != null) && (hitObject.tag == Tags.ENEMY_TAG))
+                {
+                    hit.collider.gameObject.SendMessage("HitByLight", TorchTypes.CONE, SendMessageOptions.DontRequireReceiver);
+                }
+                Debug.DrawLine(new Vector3(spotLight.transform.position.x, spotLight.transform.position.y, -0.01f), new Vector3(direction.x, direction.y, 0f), Color.green);
+            }
+            energyRemaining -= (CONE_ATTACK_LIGHT_USAGE * Time.deltaTime);
         }
         else
         {
             spotLight.enabled = false;
             pointLight.enabled = true;
-            animator.SetBool("ConeAttack", false);
+            animator.SetBool(AnimationConstants.PLAYER_CONE_ATTACK, false);
             state = TorchState.Normal;
             NormalTorch();
             return;

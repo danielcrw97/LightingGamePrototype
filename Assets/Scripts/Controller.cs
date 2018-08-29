@@ -84,9 +84,8 @@ public class Controller : MonoBehaviour
         animator.SetBool(AnimationConstants.PLAYER_JUMP, isJumping);
         animator.SetBool(AnimationConstants.PLAYER_FALL, rb.velocity.y < -0.01f);
 
-        // Coupled to attack system! Add lock movement function!
-        if (animator.GetBool(AnimationConstants.PLAYER_AREA_ATTACK) || 
-                (animator.GetBool("ConeAttack") && !isJumping))
+        // Coupled to attack system! Add lock movement api!
+        if (animator.GetBool(AnimationConstants.PLAYER_AREA_ATTACK))
         {
             rb.velocity = Vector2.zero;
         }

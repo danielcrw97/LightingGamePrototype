@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class SpiderAI : MonoBehaviour {
 
-    private enum State
+    public enum State
     {
         IDLE,
         PATROLLING,
         CHASING,
         ATTACKING,
         IMMOBILIZED,
+        FLEEING
     }
 
     [SerializeField]
@@ -27,14 +28,14 @@ public class SpiderAI : MonoBehaviour {
     private Rigidbody2D rb;
     private Transform target;
     private Animator animator;
-    private State state;
+    public State state;
 
     // Flags
     private bool facingRight;
     private bool cantAttack;
     private bool waiting;
 
-    private const float ATTACK_DISTANCE = 1.3f;
+    private const float ATTACK_DISTANCE = 2f;
     private const float SPIDER_RANGE = 5f;
 
     void Awake() {
@@ -87,6 +88,10 @@ public class SpiderAI : MonoBehaviour {
 
             case State.IDLE:
                 Idle();
+                break;
+
+            case State.FLEEING:
+                Flee();
                 break;
 
             default:
@@ -176,6 +181,10 @@ public class SpiderAI : MonoBehaviour {
         }
     }
 
+    private void AttackStarted()
+    {
+    }
+
     private void AttackOver()
     {
         state = State.CHASING;
@@ -184,6 +193,11 @@ public class SpiderAI : MonoBehaviour {
     }
 
     private void Immobilize()
+    {
+
+    }
+
+    private void Flee()
     {
 
     }
@@ -201,6 +215,18 @@ public class SpiderAI : MonoBehaviour {
 
     }
 
+    private void HitByLight(TorchTypes type)
+    {
+        if(type == TorchTypes.AREA)
+        {
+            state = State.FLEEING;
+        }
+        else
+        {
+            state = State.IMMOBILIZED;
+        }
+    }
+
     private bool CanTargetPlayer()
     {
         // If the spider can sense the players and he is not beyond the spiders limits - go for it!
@@ -214,6 +240,12 @@ public class SpiderAI : MonoBehaviour {
     {
         return (target.transform.position.x < leftBarrier.transform.position.x) ||
             (target.transform.position.x > rightBarrier.transform.position.x);
+    }
+
+    private Pair<Vector2, Vector2> GetPositionOfEdges()
+    {
+        //Physics2D.Raycast(GetComponent<Collider2D>().bounds.min)
+        return new Pair<Vector2, Vector2>(new Vector2(), new Vector2());
     }
 
     private IEnumerator WaitThenTurnAround(float seconds)

@@ -8,5 +8,6 @@ public static class Tags
 {
     public const String CRYSTAL_TAG = "Crystal";
     public const String PLAYER_TAG = "Player";
+    public const String ENEMY_TAG = "Enemy";
 }
 

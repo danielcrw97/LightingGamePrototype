@@ -1,15 +1,9 @@
 fileFormatVersion: 2
-guid: 3829bc39ab1011545930a5df9711608d
+guid: b70c3b9df60e7e141bdfc44e419ca2d4
 TextureImporter:
   fileIDToRecycleName:
-    21300000: AttackSH_0
-    21300002: AttackSH_1
-    21300004: AttackSH_2
-    21300006: AttackSH_3
-    21300008: AttackSH_4
-    21300010: AttackSH_5
-    21300012: AttackSH_6
-    21300014: AttackSH_7
+    21300000: Damaged sheet_0
+    21300002: Damaged sheet_1
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -125,12 +119,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AttackSH_0
+      name: Damaged sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 448
+        width: 64
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -139,18 +133,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7c8d87c24fb3174196f305c721076a7
+      spriteID: a3f6bd98f716a33419f94c2f0a376352
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackSH_1
+      name: Damaged sheet_1
       rect:
         serializedVersion: 2
-        x: 448
+        x: 64
         y: 0
-        width: 448
+        width: 64
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -159,127 +153,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e57a45d70439964b8db177ec5e0c3c2
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AttackSH_2
-      rect:
-        serializedVersion: 2
-        x: 896
-        y: 0
-        width: 448
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c9b5c5d0b57c1f844b9b1d322071e515
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AttackSH_3
-      rect:
-        serializedVersion: 2
-        x: 1344
-        y: 0
-        width: 448
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b6d363f5db5f53246afd995c44ce4883
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AttackSH_4
-      rect:
-        serializedVersion: 2
-        x: 1792
-        y: 0
-        width: 448
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 45ecd62641b8ab44e84763a30c40bd75
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AttackSH_5
-      rect:
-        serializedVersion: 2
-        x: 2240
-        y: 0
-        width: 448
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: efc5c49c3612cd34ea308819412c8a50
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AttackSH_6
-      rect:
-        serializedVersion: 2
-        x: 2688
-        y: 0
-        width: 448
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: abea373cc61969045a4a772ce4c31079
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AttackSH_7
-      rect:
-        serializedVersion: 2
-        x: 3136
-        y: 0
-        width: 448
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e747e5a93358caa46a19e4d5bdba5fd1
+      spriteID: c34bb13d555703d42ba6ed00c450e912
       vertices: []
       indices: 
       edges: []
@@ -287,7 +161,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: c3f9f1cfc43e177468466c96f0adf207
+    spriteID: 6a90f550b34b79345b5f9fc406264775
     vertices: []
     indices: 
     edges: []

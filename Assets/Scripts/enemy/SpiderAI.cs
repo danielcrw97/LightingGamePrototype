@@ -34,8 +34,7 @@ public class SpiderAI : MonoBehaviour {
     private bool facingRight;
     private bool cantAttack;
     private bool waiting;
-    private bool becomingStunned;
-    private bool recovering;
+    private bool bouncy;
 
     private const float ATTACK_DISTANCE = 2f;
     private const float SPIDER_RANGE = 5f;
@@ -196,12 +195,17 @@ public class SpiderAI : MonoBehaviour {
 
     private void Immobilize()
     {
-        if(!animator.GetBool)
+        
     }
 
     private void Flee()
     {
 
+    }
+
+    private void OnStunned()
+    {
+        bouncy = true;
     }
 
     private void Idle()

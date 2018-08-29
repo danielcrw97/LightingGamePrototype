@@ -5,5 +5,6 @@ using System.Text;
 
 public static class AIUtils
 {
+
 }
 

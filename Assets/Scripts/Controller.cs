@@ -45,11 +45,15 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Check for falling out of game.
+        if(transform.position.y < -1000f)
+        {
+            Die();
+        }
     }
 
     void FixedUpdate()
     {
-
         rb.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y);
 
         if (rb.velocity.x < 0f && rendererComp.flipX == false)
@@ -72,6 +76,7 @@ public class Controller : MonoBehaviour
 
         if (!isJumping && Input.GetKey(KeyCode.Space))
         {
+            Debug.Log(Time.time);
             isJumping = true;
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
         }
@@ -93,6 +98,7 @@ public class Controller : MonoBehaviour
 
     public void Hit()
     {
+        // Add force to player, disable collider, play animation!
         Debug.Log("Hit");
         health--;
         if(health == 0)
@@ -131,6 +137,7 @@ public class Controller : MonoBehaviour
             RaycastHit2D rayHit = Physics2D.Raycast(midBottom, Vector2.down);
             if ((rayHit != null) && rayHit.distance < 0.01f)
             {
+                Debug.Log(Time.time);
                 isJumping = false;
                 animator.SetBool(AnimationConstants.PLAYER_JUMP, false);
                 animator.SetBool(AnimationConstants.PLAYER_FALL, false);

@@ -1006,6 +1006,21 @@ Prefab:
       propertyPath: m_Name
       value: BgMusicLevel
       objectReference: {fileID: 0}
+    - target: {fileID: 114297661201316066, guid: 9f2548f88c7bf59469c614267decbcce,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 61a7b32b58e17884a90e69120a687579,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114297661201316066, guid: 9f2548f88c7bf59469c614267decbcce,
+        type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f2548f88c7bf59469c614267decbcce, type: 2}
   m_IsPrefabAsset: 0
@@ -1612,7 +1627,7 @@ Prefab:
     - target: {fileID: 224525430644306122, guid: acccc120764debe449895b9e2435c363,
         type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224525430644306122, guid: acccc120764debe449895b9e2435c363,
         type: 2}
@@ -1904,7 +1919,7 @@ Prefab:
     - target: {fileID: 224237136205005912, guid: 9f2548f88c7bf59469c614267decbcce,
         type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 224237136205005912, guid: 9f2548f88c7bf59469c614267decbcce,
         type: 2}
@@ -1964,6 +1979,17 @@ Prefab:
         type: 2}
       propertyPath: m_Text
       value: SoundFX Level
+      objectReference: {fileID: 0}
+    - target: {fileID: 114297661201316066, guid: 9f2548f88c7bf59469c614267decbcce,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 61a7b32b58e17884a90e69120a687579,
+        type: 3}
+    - target: {fileID: 114297661201316066, guid: 9f2548f88c7bf59469c614267decbcce,
+        type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f2548f88c7bf59469c614267decbcce, type: 2}
@@ -2157,6 +2183,12 @@ Prefab:
       propertyPath: m_FontData.m_MaxSize
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 114297661201316066, guid: 9f2548f88c7bf59469c614267decbcce,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 61a7b32b58e17884a90e69120a687579,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f2548f88c7bf59469c614267decbcce, type: 2}
   m_IsPrefabAsset: 0
@@ -3093,8 +3125,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1399173172}
-  - {fileID: 2093782419}
   - {fileID: 510664527}
+  - {fileID: 2093782419}
   m_Father: {fileID: 757964913}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

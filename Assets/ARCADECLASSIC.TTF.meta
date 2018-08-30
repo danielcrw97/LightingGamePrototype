@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8ef49a989df1e5a429ea46f9e3ea1bcb
+guid: 61a7b32b58e17884a90e69120a687579
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,11 +8,10 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: PanicButton BB
+  fontName: ArcadeClassic
   fontNames:
-  - PanicButton BB
-  fallbackFontReferences:
-  - {fileID: 12800000, guid: 823a61176140ad94e9f8f659ca7ffa89, type: 3}
+  - ArcadeClassic
+  fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

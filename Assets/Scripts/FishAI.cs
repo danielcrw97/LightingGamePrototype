@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,17 +8,23 @@ public class FishAI : MonoBehaviour {
     enum State
     {
         WANDERING,
-        CHASING
+        CHASING,
+        FLEEING
     }
 
-    public float speed;
+    public float maxSpeed;
+    public float jumpSpeed;
 
     private Rigidbody2D rb;
+    private Collider2D colliderComp;
     private Transform target;
     private SpriteRenderer rendererComp;
     private Vector2 leftLimit;
     private Vector2 rightLimit;
     private State state;
+    private bool waiting;
+    private bool jumping;
+    private float estimatedAirTime;
 
     private const float WANDER_RANGE = 10f;
 
@@ -30,9 +37,12 @@ public class FishAI : MonoBehaviour {
     void Start () {
         rb = GetComponent<Rigidbody2D>();
         rendererComp = GetComponent<SpriteRenderer>();
+        colliderComp = GetComponent<Collider2D>();
         leftLimit = new Vector2(transform.position.x - WANDER_RANGE, transform.position.y);
         rightLimit = new Vector2(transform.position.x + WANDER_RANGE, transform.position.y);
         state = State.WANDERING;
+        this.maxSpeed = 3f;
+        this.jumpSpeed = 11f;
 	}
 
     void FixedUpdate()
@@ -45,34 +55,139 @@ public class FishAI : MonoBehaviour {
         {
             Chase();
         }
-
-        if(rb.velocity.x > 0f)
+        else if(state == State.FLEEING)
         {
-            rendererComp.flipX = true;
+            Flee();
         }
-        else
+
+        if (rb.velocity.x < 0f && rendererComp.flipX)
         {
             rendererComp.flipX = false;
+        }
+        if (rb.velocity.x > 0f && !rendererComp.flipX)
+        {
+            rendererComp.flipX = true;
         }
     }
 
     private void Wander()
-    {
-
+    {   
+        if(CanTargetPlayer())
+        {
+            state = State.CHASING;
+            Chase();
+        }
+        else if(!waiting && !jumping)
+        {
+            float randomSpeed = (maxSpeed / 2) + ((maxSpeed / 2) * UnityEngine.Random.value);
+            randomSpeed = randomSpeed * RandomSign();
+            if(WillFishJumpOutOfBounds(randomSpeed))
+            {
+                randomSpeed = -randomSpeed;
+            }
+            rb.velocity = new Vector2(randomSpeed, jumpSpeed);
+            jumping = true;
+        }
+        else if(jumping)
+        {
+            HandleJump();
+        }
     }
 
     private void Chase()
     {
+        if(!CanTargetPlayer())
+        {
+            state = State.WANDERING;
+            Chase();
+        }
 
+        else if (!waiting && !jumping)
+        {
+            float airTime = EstimateAirTimeInSeconds();
+            float distanceToPlayer = target.position.x - transform.position.x;
+            float requiredSpeed = distanceToPlayer / airTime;
+            float speed = Mathf.Clamp(requiredSpeed, -maxSpeed, maxSpeed);
+            rb.velocity = new Vector2(speed, jumpSpeed);
+            jumping = true;
+        }
+        
+        else if(jumping)
+        {
+            HandleJump();
+        }
+    }
+
+    private void Flee()
+    {
+        
+    }
+
+    private void HandleJump()
+    {
+        bool landed = HasLanded();
+        if (landed)
+        {
+            rb.velocity = Vector2.zero;
+            jumping = false;
+            StartCoroutine(WaitUntilNextJump());
+        }
+    }
+
+    private bool HasLanded()
+    {
+        if(rb.velocity.y < 0f)
+        {
+            Vector2 bottomLeft = colliderComp.bounds.min;
+            Vector2 bottomRight = new Vector2(bottomLeft.x + (colliderComp.bounds.size.x), bottomLeft.y - 0.05f);
+            Collider2D overlap = Physics2D.OverlapArea(bottomLeft, bottomRight);
+            if(overlap != null && overlap != colliderComp)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void HitByLight(TorchTypes lightType)
     {
-        Debug.Log("Hit");
+        state = State.FLEEING;
+        // Set boolean flag and only disable it after 8 seconds.
     }
 
-    private float EstimateAirTime()
+    private IEnumerator WaitUntilNextJump()
     {
-        return 0f;
+        waiting = true;
+        yield return new WaitForSeconds(4);
+        waiting = false;
+    }
+
+
+    private float EstimateAirTimeInSeconds()
+    {
+        return Mathf.Abs((jumpSpeed * 2) / Physics2D.gravity.y);
+    }
+
+    private bool CanTargetPlayer()
+    {
+        bool isPlayerBeyondLimits = (target.position.x < leftLimit.x) || (target.position.x > rightLimit.x);
+        bool isPlayerCloseEnough = ((target.position - transform.position).magnitude) < 15f;
+        return isPlayerCloseEnough && !isPlayerBeyondLimits;
+    }
+
+    private bool WillFishJumpOutOfBounds(float xVelocity)
+    {
+        float maxDistance = EstimateAirTimeInSeconds() * xVelocity;
+        float maxPos = transform.position.x + maxDistance;
+        if(maxPos < leftLimit.x || maxPos > rightLimit.x)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private int RandomSign()
+    {
+        return UnityEngine.Random.value < 0.5 ? 1 : -1;
     }
 }

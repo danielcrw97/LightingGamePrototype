@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Crystal
   - Ground
-  - wall
+  - Enemy
   layers:
   - Default
   - TransparentFX

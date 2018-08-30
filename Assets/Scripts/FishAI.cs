@@ -19,6 +19,7 @@ public class FishAI : MonoBehaviour {
     private Collider2D colliderComp;
     private Transform target;
     private SpriteRenderer rendererComp;
+    private Animator animator;
     private Vector2 leftLimit;
     private Vector2 rightLimit;
     private Vector2 lastHitByLight;
@@ -41,6 +42,7 @@ public class FishAI : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         rendererComp = GetComponent<SpriteRenderer>();
         colliderComp = GetComponent<Collider2D>();
+        animator = GetComponent<Animator>();
         leftLimit = new Vector2(transform.position.x - WANDER_RANGE, transform.position.y);
         rightLimit = new Vector2(transform.position.x + WANDER_RANGE, transform.position.y);
         state = State.WANDERING;
@@ -72,6 +74,8 @@ public class FishAI : MonoBehaviour {
         {
             rendererComp.flipX = true;
         }
+
+        animator.SetFloat("VerticalSpeed", rb.velocity.y);
     }
 
     void Update()

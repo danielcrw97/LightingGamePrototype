@@ -109,7 +109,8 @@ public class Controller : MonoBehaviour
 
     public void Bounce()
     {
-        Debug.Log("Bounce");
+        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed * 3);
+        isJumping = true;
     }
 
     public void Die()

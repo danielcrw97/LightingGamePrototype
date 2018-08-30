@@ -21,12 +21,15 @@ public class FishAI : MonoBehaviour {
     private SpriteRenderer rendererComp;
     private Vector2 leftLimit;
     private Vector2 rightLimit;
+    private Vector2 lastHitByLight;
     private State state;
+    private Coroutine waitingRoutine;
     private bool waiting;
     private bool jumping;
     private float estimatedAirTime;
 
     private const float WANDER_RANGE = 10f;
+    private const float FLEE_RANGE = 15f;
 
     void Awake()
     {
@@ -41,6 +44,7 @@ public class FishAI : MonoBehaviour {
         leftLimit = new Vector2(transform.position.x - WANDER_RANGE, transform.position.y);
         rightLimit = new Vector2(transform.position.x + WANDER_RANGE, transform.position.y);
         state = State.WANDERING;
+        lastHitByLight = new Vector2();
         this.maxSpeed = 3f;
         this.jumpSpeed = 11f;
 	}
@@ -70,6 +74,14 @@ public class FishAI : MonoBehaviour {
         }
     }
 
+    void Update()
+    {
+        if(transform.position.y < -5000f)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Wander()
     {   
         if(CanTargetPlayer())
@@ -90,7 +102,7 @@ public class FishAI : MonoBehaviour {
         }
         else if(jumping)
         {
-            HandleJump();
+            HandleJump(4f);
         }
     }
 
@@ -114,23 +126,43 @@ public class FishAI : MonoBehaviour {
         
         else if(jumping)
         {
-            HandleJump();
+            HandleJump(4f);
         }
     }
 
     private void Flee()
     {
-        
+        if ((Mathf.Abs(lastHitByLight.x - transform.position.x)) > FLEE_RANGE)
+        {
+            state = State.WANDERING;
+        }
+
+        if (!waiting && !jumping)
+        {
+            if((lastHitByLight.x - transform.position.x) > 0f)
+            {
+                rb.velocity = new Vector2(-maxSpeed, jumpSpeed);
+            }
+            else
+            {
+                rb.velocity = new Vector2(maxSpeed, jumpSpeed);
+            }
+            jumping = true;
+        }
+        else if (jumping)
+        {
+            HandleJump(0.5f);
+        }
     }
 
-    private void HandleJump()
+    private void HandleJump(float landingWaitTime)
     {
         bool landed = HasLanded();
         if (landed)
         {
             rb.velocity = Vector2.zero;
             jumping = false;
-            StartCoroutine(WaitUntilNextJump());
+            waitingRoutine = StartCoroutine(WaitUntilNextJump(landingWaitTime));
         }
     }
 
@@ -149,16 +181,19 @@ public class FishAI : MonoBehaviour {
         return false;
     }
 
-    public void HitByLight(TorchTypes lightType)
+    public void HitByLight(Vector2 lightPos)
     {
+        StopCoroutine(waitingRoutine);
+        waiting = false;
+        lastHitByLight = lightPos;
         state = State.FLEEING;
-        // Set boolean flag and only disable it after 8 seconds.
+        Flee();
     }
 
-    private IEnumerator WaitUntilNextJump()
+    private IEnumerator WaitUntilNextJump(float waitTime)
     {
         waiting = true;
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(waitTime);
         waiting = false;
     }
 

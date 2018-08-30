@@ -6,22 +6,29 @@ You play as an injured astronaut whose ship has crash landed on a planet. The pl
 ## TODOS
 
 ### Main priorities-
-* Set up flashlight visuals.
-* Set up flashlight as an attack.
-* Set up area of effect player attack
-* Add AI for amphibious monster.
-* Add AI for eyeball monster.
-* Create bouncing effect for eyeball monster.
+* Set up flashlight visuals. DONE
+* Set up flashlight as an attack. DONE
+* Set up area of effect player attack DONE
+* Add AI for amphibious monster. DONE
+* Add AI for eyeball monster. DONE
+* Create bouncing effect for eyeball monster. DONE 
 * Create animations for eyeball monster. DONE
-* Create animations for fish monster.
-* Add monster attacks.
-* Add health for player (die in three hits)
+* Create animations for fish monster.DONE
+* Add monster attacks. DONE
+* Add health for player (die in three hits) DONE
 * Add lighting for things that need it (e.g. crystals). DONE?
 * Add system where the light slowly runs out (with death/restarting). DONE
-* Set up keyboard mappings.
-* Sound effects for creatures?
-* Attacking in mid-air (to bounce off eyeballs)
+* Attacking in mid-air (to bounce off eyeballs) DONE
 * Smooth camera DONE
+* Finish start screen. 
+* Set up hit response + animation properly
+* Make sure enemies react properply to walls + other enemies. 
+* Add all sound effects
+* Set up keyboard mappings
+* Create death settings (respawning)
+* Create level transitions
+* Playtest + balance
+* Make particle effects show at correct times. 
 
 ### Possible future tasks-
 * Particle effects for monsters being hit.

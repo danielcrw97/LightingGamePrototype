@@ -267,11 +267,13 @@ public class Torch : MonoBehaviour {
                 float worldAngle = spotLight.transform.eulerAngles.x + angle;
               
                 Vector2 direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * worldAngle), Mathf.Sin(Mathf.Deg2Rad * worldAngle));
-                RaycastHit2D hit = Physics2D.Raycast(spotLight.transform.position, direction, CONE_ATTACK_TORCH_RANGE);
-                GameObject hitObject = hit.collider.gameObject;
-                if((hitObject.tag != null) && (hitObject.tag == Tags.ENEMY_TAG))
+                RaycastHit2D[] hits = Physics2D.RaycastAll(spotLight.transform.position, direction, CONE_ATTACK_TORCH_RANGE);
+                foreach(RaycastHit2D hit in hits)
                 {
-                    hit.collider.gameObject.SendMessage("HitByLight", (Vector2) spotLight.transform.position, SendMessageOptions.DontRequireReceiver);
+                    if ((hit.collider != null) && (hit.collider.gameObject.tag == Tags.ENEMY_TAG))
+                    {
+                        hit.collider.gameObject.SendMessage("HitByLight", (Vector2)spotLight.transform.position, SendMessageOptions.DontRequireReceiver);
+                    }
                 }
                 Debug.DrawLine(new Vector3(spotLight.transform.position.x, spotLight.transform.position.y, -0.01f), new Vector3(direction.x, direction.y, 0f), Color.green);
             }

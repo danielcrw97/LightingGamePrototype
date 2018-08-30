@@ -130,7 +130,7 @@ public class FishAI : MonoBehaviour {
         
         else if(jumping)
         {
-            HandleJump(4f);
+            HandleJump(3f);
         }
     }
 

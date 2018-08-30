@@ -46,7 +46,7 @@ public class GUI : MonoBehaviour
         //Responce yes or no
         else if (para == "yes")
         {
-            Application.Quit()
+            Application.Quit();
         }
         else if (para == "no")
         {

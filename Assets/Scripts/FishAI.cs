@@ -210,7 +210,6 @@ public class FishAI : MonoBehaviour {
         GameObject obj = collision.collider.gameObject;
         if(obj.tag == Tags.PLAYER_TAG)
         {
-            Vector2 hitDirection = Vector3.Normalize(obj.transform.position - transform.position);
             obj.SendMessage("Hit", (Vector2)(target.position - transform.position), SendMessageOptions.DontRequireReceiver);
         }
     }

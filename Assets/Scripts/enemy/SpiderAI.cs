@@ -58,9 +58,9 @@ public class SpiderAI : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if(health <= 0f)
+        if (transform.position.y < -5000f)
         {
-           
+            Destroy(gameObject);
         }
     }
 
@@ -241,7 +241,7 @@ public class SpiderAI : MonoBehaviour {
         state = State.CHASING;
     }
 
-    private void HitByLight(TorchTypes type)
+    private void HitByLight(Vector2 torchPos)
     {
         state = State.IMMOBILIZED;
     }

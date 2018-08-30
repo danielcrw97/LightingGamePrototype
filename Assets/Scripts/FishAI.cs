@@ -74,6 +74,14 @@ public class FishAI : MonoBehaviour {
         }
     }
 
+    void Update()
+    {
+        if(transform.position.y < -5000f)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Wander()
     {   
         if(CanTargetPlayer())

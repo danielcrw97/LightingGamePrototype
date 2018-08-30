@@ -200,7 +200,7 @@ public class Torch : MonoBehaviour {
         {
             if(hit.gameObject.tag == Tags.ENEMY_TAG)
             {
-                hit.gameObject.SendMessage("HitByLight", pointLight.transform.position, SendMessageOptions.DontRequireReceiver);
+                hit.gameObject.SendMessage("HitByLight", (Vector2) pointLight.transform.position, SendMessageOptions.DontRequireReceiver);
             }
         }
 
@@ -271,7 +271,7 @@ public class Torch : MonoBehaviour {
                 GameObject hitObject = hit.collider.gameObject;
                 if((hitObject.tag != null) && (hitObject.tag == Tags.ENEMY_TAG))
                 {
-                    hit.collider.gameObject.SendMessage("HitByLight", spotLight.transform.position, SendMessageOptions.DontRequireReceiver);
+                    hit.collider.gameObject.SendMessage("HitByLight", (Vector2) spotLight.transform.position, SendMessageOptions.DontRequireReceiver);
                 }
                 Debug.DrawLine(new Vector3(spotLight.transform.position.x, spotLight.transform.position.y, -0.01f), new Vector3(direction.x, direction.y, 0f), Color.green);
             }

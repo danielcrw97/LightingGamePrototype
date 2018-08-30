@@ -37,9 +37,9 @@ GameObject:
   - component: {fileID: 4672432715410040}
   - component: {fileID: 212074009581455290}
   - component: {fileID: 50435841992694430}
-  - component: {fileID: 95072372305269050}
   - component: {fileID: 114809866495306014}
   - component: {fileID: 61655241521425546}
+  - component: {fileID: 95680306752167966}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Enemy
@@ -149,7 +149,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.85, y: 0.85}
   m_EdgeRadius: 0
---- !u!95 &95072372305269050
+--- !u!95 &95680306752167966
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -158,7 +158,7 @@ Animator:
   m_GameObject: {fileID: 1520112041682750}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5506f82918d014a499a6ed00130170b0, type: 2}
+  m_Controller: {fileID: 9100000, guid: 285719efae5309d438a2e268995ac702, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FishAI : MonoBehaviour {
 
-    enum State
+    public enum State
     {
         WANDERING,
         CHASING,
@@ -38,7 +38,7 @@ public class FishAI : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start () { 
         rb = GetComponent<Rigidbody2D>();
         rendererComp = GetComponent<SpriteRenderer>();
         colliderComp = GetComponent<Collider2D>();
@@ -49,6 +49,8 @@ public class FishAI : MonoBehaviour {
         lastHitByLight = new Vector2();
         this.maxSpeed = 3f;
         this.jumpSpeed = 11f;
+        float random = UnityEngine.Random.Range(0f, 8f);
+        WaitUntilNextJump(random);
 	}
 
     void FixedUpdate()
@@ -103,6 +105,7 @@ public class FishAI : MonoBehaviour {
             }
             rb.velocity = new Vector2(randomSpeed, jumpSpeed);
             jumping = true;
+            
         }
         else if(jumping)
         {
@@ -143,7 +146,7 @@ public class FishAI : MonoBehaviour {
 
         if (!waiting && !jumping)
         {
-            if((lastHitByLight.x - transform.position.x) > 0f)
+            if ((lastHitByLight.x - transform.position.x) > 0f)
             {
                 rb.velocity = new Vector2(-maxSpeed, jumpSpeed);
             }
@@ -161,10 +164,8 @@ public class FishAI : MonoBehaviour {
 
     private void HandleJump(float landingWaitTime)
     {
-        bool landed = HasLanded();
-        if (landed)
+        if (HasLanded())
         {
-            rb.velocity = Vector2.zero;
             jumping = false;
             waitingRoutine = StartCoroutine(WaitUntilNextJump(landingWaitTime));
         }
@@ -174,7 +175,7 @@ public class FishAI : MonoBehaviour {
     {
         if(rb.velocity.y < 0f)
         {
-            Vector2 bottomLeft = colliderComp.bounds.min;
+            Vector2 bottomLeft = colliderComp.bounds.min - new Vector3(0f, 0.05f, 0f);
             Vector2 bottomRight = new Vector2(bottomLeft.x + (colliderComp.bounds.size.x), bottomLeft.y - 0.05f);
             Collider2D overlap = Physics2D.OverlapArea(bottomLeft, bottomRight);
             if(overlap != null && overlap != colliderComp)
@@ -187,7 +188,10 @@ public class FishAI : MonoBehaviour {
 
     public void HitByLight(Vector2 lightPos)
     {
-        StopCoroutine(waitingRoutine);
+        if(waitingRoutine != null)
+        {
+            StopCoroutine(waitingRoutine);
+        }
         waiting = false;
         lastHitByLight = lightPos;
         state = State.FLEEING;
@@ -201,6 +205,15 @@ public class FishAI : MonoBehaviour {
         waiting = false;
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject obj = collision.collider.gameObject;
+        if(obj.tag == Tags.PLAYER_TAG)
+        {
+            Vector2 hitDirection = Vector3.Normalize(obj.transform.position - transform.position);
+            obj.SendMessage("Hit", (Vector2)(target.position - transform.position), SendMessageOptions.DontRequireReceiver);
+        }
+    }
 
     private float EstimateAirTimeInSeconds()
     {

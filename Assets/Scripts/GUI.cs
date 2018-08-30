@@ -22,45 +22,59 @@ public class GUI : MonoBehaviour
         if (para == "SettingClick")
         {
             animator.SetBool(AnimationConstants.SETTING_BTN_CLICKED, true);
-            playaudio();
         }
         else if (para == "SettingBack")
         {
             animator.SetBool(AnimationConstants.SETTING_BTN_CLICKED, false);
-            playaudio();
         }
       
         //Level Selection
         else if (para == "LevelClick")
         {
             animator.SetBool(AnimationConstants.LEVEL_SELECTION, true);
-            playaudio();
         }
         else if(para == "LevelBack")
         {
             animator.SetBool(AnimationConstants.LEVEL_SELECTION, false);
-            playaudio();
         }
 
         //Application Quit warning
         else if (para == "Quit")
         {
             animator.SetBool(AnimationConstants.APPLICATION_WARN, true);
-            playaudio();
         }
         //Responce yes or no
         else if (para == "yes")
         {
-            Application.Quit();
-            playaudio();
+            Application.Quit()
         }
         else if (para == "no")
         {
             animator.SetBool(AnimationConstants.APPLICATION_WARN, false);
-            playaudio();
         }
+        playaudio();
     }
 
+    public void Levels(int para)
+    {
+        if (para == 1)
+          {
+             //level 1
+           }
+             else if (para == 2)
+                {
+                  //level 2
+                }
+                 else if (para == 3)
+                   {
+                     //level 3
+                   }
+                    else if (para == 4)
+                       {
+                        //level 4
+                       }
+    playaudio();
+    }
     private void playaudio()
     {
         audiosource.Play();

@@ -60,13 +60,13 @@ public class FishAI : MonoBehaviour {
             Flee();
         }
 
-        if(rb.velocity.x > 0f)
-        {
-            rendererComp.flipX = true;
-        }
-        else
+        if (rb.velocity.x < 0f && rendererComp.flipX)
         {
             rendererComp.flipX = false;
+        }
+        if (rb.velocity.x > 0f && !rendererComp.flipX)
+        {
+            rendererComp.flipX = true;
         }
     }
 
@@ -120,7 +120,7 @@ public class FishAI : MonoBehaviour {
 
     private void Flee()
     {
-
+        
     }
 
     private void HandleJump()

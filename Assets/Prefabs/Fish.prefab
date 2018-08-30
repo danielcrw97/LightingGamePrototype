@@ -36,10 +36,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4672432715410040}
   - component: {fileID: 212074009581455290}
-  - component: {fileID: 60970934641560212}
   - component: {fileID: 50435841992694430}
   - component: {fileID: 95072372305269050}
   - component: {fileID: 114809866495306014}
+  - component: {fileID: 61655241521425546}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Untagged
@@ -96,7 +96,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1520112041682750}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.364, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0.68292105, y: 0.5452591, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4531948077886130}
@@ -124,8 +124,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!60 &60970934641560212
-PolygonCollider2D:
+--- !u!61 &61655241521425546
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -136,7 +136,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.05}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -146,33 +146,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.484375, y: -0.078125}
-      - {x: 0.4375, y: 0}
-      - {x: 0.484375, y: 0.203125}
-      - {x: 0.5, y: 0.3125}
-      - {x: 0.5, y: 0.46875}
-      - {x: 0.21875, y: 0.46875}
-      - {x: 0.15625, y: 0.5}
-      - {x: -0.140625, y: 0.5}
-      - {x: -0.296875, y: 0.453125}
-      - {x: -0.359375, y: 0.390625}
-      - {x: -0.40625, y: -0.078125}
-      - {x: -0.46875, y: -0.28125}
-      - {x: -0.4643489, y: -0.36465913}
-      - {x: -0.40911293, y: -0.38710654}
-      - {x: -0.32416523, y: -0.37236458}
-      - {x: -0.31734276, y: -0.35475975}
-      - {x: -0.18794131, y: -0.34793717}
-      - {x: -0.15382862, y: -0.34309447}
-      - {x: -0.15625, y: -0.34375}
-      - {x: 0.09375, y: -0.21875}
-      - {x: 0.021564484, y: -0.37676585}
-      - {x: 0.28565145, y: -0.37236458}
-      - {x: 0.390625, y: -0.375}
-      - {x: 0.390625, y: -0.265625}
-      - {x: 0.46875, y: -0.140625}
+  serializedVersion: 2
+  m_Size: {x: 0.85, y: 0.85}
+  m_EdgeRadius: 0
 --- !u!95 &95072372305269050
 Animator:
   serializedVersion: 3
@@ -276,6 +252,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81ff9cc5051d8ac4691f8482cb2db741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 0
+  jumpSpeed: 0
 --- !u!212 &212074009581455290
 SpriteRenderer:
   m_ObjectHideFlags: 1

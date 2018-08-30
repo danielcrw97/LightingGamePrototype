@@ -107,6 +107,11 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public void Bounce()
+    {
+        Debug.Log("Bounce");
+    }
+
     public void Die()
     {
         // Lights go out etc.
@@ -137,7 +142,6 @@ public class Controller : MonoBehaviour
             RaycastHit2D rayHit = Physics2D.Raycast(midBottom, Vector2.down);
             if ((rayHit != null) && rayHit.distance < 0.01f)
             {
-                Debug.Log(Time.time);
                 isJumping = false;
                 animator.SetBool(AnimationConstants.PLAYER_JUMP, false);
                 animator.SetBool(AnimationConstants.PLAYER_FALL, false);

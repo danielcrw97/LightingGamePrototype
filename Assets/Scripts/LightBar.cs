@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class LightBar : MonoBehaviour {
 
-    private Slider slider;
+    private Image lightBar;
     private Torch torch;
 
     void Awake()
@@ -16,13 +16,12 @@ public class LightBar : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        this.slider = GetComponent<Slider>();
+        this.lightBar = GetComponent<Image>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        float energyRemaining = torch.GetEnergy();
-        float value = energyRemaining / Torch.MAX_ENERGY;
-        slider.value = Mathf.Clamp(value, 0f, 1f); 
+        float value = torch.GetEnergy() / Torch.MAX_ENERGY;
+        lightBar.fillAmount = Mathf.Clamp(value, 0f, 1f); 
 	}
 }

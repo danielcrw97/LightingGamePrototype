@@ -180,7 +180,7 @@ public class Torch : MonoBehaviour {
             return;
         }
 
-        if (Input.GetKeyUp(KeyCode.E))
+        if (!Input.GetKey(KeyCode.E))
         {
             animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, false);
             state = TorchState.Normal;
@@ -318,8 +318,16 @@ public class Torch : MonoBehaviour {
 
     private void UpdateLight()
     {
-        float difference = DEFAULT_LIGHT_RANGE - MIN_LIGHT_RANGE;
-        float ratioOfEnergyLeft = energyRemaining / MAX_ENERGY;
-        pointLight.range = DEFAULT_LIGHT_RANGE - ((1 - ratioOfEnergyLeft) * difference);
+        if(energyRemaining > 0f)
+        {
+            float difference = DEFAULT_LIGHT_RANGE - MIN_LIGHT_RANGE;
+            float ratioOfEnergyLeft = energyRemaining / MAX_ENERGY;
+            pointLight.range = DEFAULT_LIGHT_RANGE - ((1 - ratioOfEnergyLeft) * difference);
+        }
+        else
+        {
+            pointLight.range = 0f;
+            spotLight.range = 0f;
+        }
     }
 }

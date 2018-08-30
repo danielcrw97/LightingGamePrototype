@@ -21,7 +21,7 @@ You play as an injured astronaut whose ship has crash landed on a planet. The pl
 * Attacking in mid-air (to bounce off eyeballs) DONE
 * Smooth camera DONE
 * Finish start screen. 
-* Set up hit response + animation properly
+* Set up hit response + animation properly DONE
 * Make sure enemies react properply to walls + other enemies. 
 * Add all sound effects
 * Set up keyboard mappings

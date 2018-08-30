@@ -59,7 +59,6 @@ public class GUI : MonoBehaviour
             animator.SetBool(AnimationConstants.APPLICATION_WARN, false);
             playaudio();
         }
-
     }
 
     private void playaudio()

@@ -16,34 +16,49 @@ public class GUI : MonoBehaviour
         this.audiosource = gameObject.GetComponent<AudioSource>();
     }
 
-    public void Setting_Btn()
+    public void UI(string para) 
     {
-        animator.SetBool(AnimationConstants.SETTING_BTN_CLICKED, true);
+        //Setting Menu
+        if (para == "SettingClick")
+        {
+            animator.SetBool(AnimationConstants.SETTING_BTN_CLICKED, true);
             playaudio();
-    }
-    public void Setting_Back_Btn()
-    {
-        animator.SetBool(AnimationConstants.SETTING_BTN_CLICKED, false);
+        }
+        else if (para == "SettingBack")
+        {
+            animator.SetBool(AnimationConstants.SETTING_BTN_CLICKED, false);
             playaudio();
-    }
+        }
+      
+        //Level Selection
+        else if (para == "LevelClick")
+        {
+            animator.SetBool(AnimationConstants.LEVEL_SELECTION, true);
+            playaudio();
+        }
+        else if(para == "LevelBack")
+        {
+            animator.SetBool(AnimationConstants.LEVEL_SELECTION, false);
+            playaudio();
+        }
 
-    //Quite Application
-    public void Quit()
-    {
-        animator.SetBool(AnimationConstants.APPLICATION_WARN, true);
+        //Application Quit warning
+        else if (para == "Quit")
+        {
+            animator.SetBool(AnimationConstants.APPLICATION_WARN, true);
             playaudio();
-    }
-
-    //warning YES or NO
-    public void warningforYes()
-    {
-        Application.Quit();
+        }
+        //Responce yes or no
+        else if (para == "yes")
+        {
+            Application.Quit();
             playaudio();
-    }
-    public void warningforNo()
-    {
-        animator.SetBool(AnimationConstants.APPLICATION_WARN, false);
+        }
+        else if (para == "no")
+        {
+            animator.SetBool(AnimationConstants.APPLICATION_WARN, false);
             playaudio();
+        }
     }
 
     private void playaudio()

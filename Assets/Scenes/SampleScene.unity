@@ -114,58 +114,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &8862582 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1859546368753202, guid: c873a1b68733fcb47927697326a4ef8f,
-    type: 2}
-  m_PrefabInternal: {fileID: 391232803}
---- !u!60 &8862583
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 8862582}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.34375, y: -0.4375}
-      - {x: 0.296875, y: -0.21875}
-      - {x: 0.390625, y: -0.46875}
-      - {x: 0.4375, y: -0.5}
-      - {x: 0.5, y: -0.5}
-      - {x: 0.5, y: 0}
-      - {x: 0.46875, y: 0.09375}
-      - {x: 0.390625, y: 0.15625}
-      - {x: 0.359375, y: 0.15625}
-      - {x: 0.25, y: 0.265625}
-      - {x: 0.140625, y: 0.359375}
-      - {x: 0.0625, y: 0.375}
-      - {x: -0.234375, y: 0.375}
-      - {x: -0.4375, y: 0.21875}
-      - {x: -0.46875, y: 0.15625}
-      - {x: -0.46875, y: -0.0625}
-      - {x: -0.4375, y: -0.171875}
-      - {x: -0.453125, y: -0.453125}
-      - {x: -0.34375, y: -0.5}
-      - {x: -0.21875, y: -0.5}
-      - {x: -0.15625, y: -0.40625}
-      - {x: -0.09375, y: -0.5}
-      - {x: 0.296875, y: -0.5}
 --- !u!1001 &66667311
 Prefab:
   m_ObjectHideFlags: 0
@@ -350,7 +298,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4148272832020844, guid: c873a1b68733fcb47927697326a4ef8f, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4148272832020844, guid: c873a1b68733fcb47927697326a4ef8f, type: 2}
       propertyPath: m_LocalRotation.x
@@ -372,8 +320,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 61750269054535176, guid: c873a1b68733fcb47927697326a4ef8f, type: 2}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c873a1b68733fcb47927697326a4ef8f, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1001 &451487924
@@ -470,11 +417,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4941751929318720, guid: 85b26c33407561649b23db828d8daeeb, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -3.657
+      value: -3.41
       objectReference: {fileID: 0}
     - target: {fileID: 4941751929318720, guid: 85b26c33407561649b23db828d8daeeb, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.401
+      value: 0.47
       objectReference: {fileID: 0}
     - target: {fileID: 4941751929318720, guid: 85b26c33407561649b23db828d8daeeb, type: 2}
       propertyPath: m_LocalPosition.z

@@ -188,8 +188,22 @@ public class SpiderAI : MonoBehaviour {
         }
     }
 
-    private void AttackStarted()
+    private void TriggerAttack()
     {
+        float distanceToTarget = target.transform.position.x - transform.position.x;
+        bool playerInRange = false;
+        if(facingRight)
+        {
+            playerInRange = (distanceToTarget < 3.3f) && (distanceToTarget > 0f);
+        }
+        else
+        {
+            playerInRange = (distanceToTarget > -3.3f) && (distanceToTarget < 3f);
+        }
+        if((Mathf.Abs(target.transform.position.y - transform.position.y) < 0.8f) && playerInRange)
+        {
+            target.gameObject.SendMessage("Hit", null, SendMessageOptions.DontRequireReceiver);
+        }
     }
 
     private void AttackOver()

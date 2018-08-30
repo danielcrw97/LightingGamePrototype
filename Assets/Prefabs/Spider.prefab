@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114652770531947358}
   - component: {fileID: 50755080327337818}
   - component: {fileID: 95523062671908076}
-  - component: {fileID: 61750269054535176}
+  - component: {fileID: 60938071787407556}
   m_Layer: 0
   m_Name: Spider
   m_TagString: Enemy
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1859546368753202}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.266132, y: 0.45931816, z: 0}
+  m_LocalPosition: {x: -0.266132, y: 0.45931816, z: 0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -64,8 +64,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61750269054535176
-BoxCollider2D:
+--- !u!60 &60938071787407556
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -76,7 +76,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.036705017, y: -0.032117367}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -86,9 +86,32 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.9350872, y: 0.82564926}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.34375, y: -0.4375}
+      - {x: 0.296875, y: -0.21875}
+      - {x: 0.412543, y: -0.42491472}
+      - {x: 0.42288798, y: -0.42694116}
+      - {x: 0.49269456, y: -0.40502357}
+      - {x: 0.5, y: 0}
+      - {x: 0.46875, y: 0.09375}
+      - {x: 0.390625, y: 0.15625}
+      - {x: 0.359375, y: 0.15625}
+      - {x: 0.25, y: 0.265625}
+      - {x: 0.140625, y: 0.359375}
+      - {x: 0.0625, y: 0.375}
+      - {x: -0.234375, y: 0.375}
+      - {x: -0.4375, y: 0.21875}
+      - {x: -0.46875, y: 0.15625}
+      - {x: -0.46875, y: -0.0625}
+      - {x: -0.4375, y: -0.171875}
+      - {x: -0.43851358, y: -0.39467794}
+      - {x: -0.28530318, y: -0.39041173}
+      - {x: -0.18952656, y: -0.4196353}
+      - {x: -0.15625, y: -0.40625}
+      - {x: -0.08644399, y: -0.41232944}
+      - {x: 0.11399257, y: -0.39771765}
+      - {x: 0.31879246, y: -0.4196353}
 --- !u!95 &95523062671908076
 Animator:
   serializedVersion: 3

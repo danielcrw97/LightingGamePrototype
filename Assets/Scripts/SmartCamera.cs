@@ -6,6 +6,7 @@ public class SmartCamera : MonoBehaviour {
 
     private Transform target;
     private Vector3 offset;
+    private Camera mainCamera;
 
     public float smoothSpeed = 0.125f;
 
@@ -14,8 +15,11 @@ public class SmartCamera : MonoBehaviour {
         target = GameObject.FindGameObjectWithTag(Tags.PLAYER_TAG).transform;
         transform.position = target.position + offset;
     }
+
     // Use this for initialization
     void Start () {
+        mainCamera = GetComponent<Camera>();
+        mainCamera.orthographicSize = (Screen.height) / (64 * 2);
         offset = new Vector3(0f, 0f, -10f); 
     }
 	

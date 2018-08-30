@@ -118,7 +118,7 @@ public class FishAI : MonoBehaviour {
         if(!CanTargetPlayer())
         {
             state = State.WANDERING;
-            Chase();
+            Wander();
         }
 
         else if (!waiting && !jumping)

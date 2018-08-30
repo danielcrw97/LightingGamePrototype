@@ -14,9 +14,6 @@ public class Controller : MonoBehaviour
     private UnityEvent OnHit;
     private UnityEvent OnDeath;
 
-    //TODO replace all magic numbers
-    //TODO fix animation when falling off small ledges.
-
     public float speed;
     public float jumpSpeed;
     public float fallingGravityMult;

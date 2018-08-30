@@ -89,12 +89,20 @@ public class Controller : MonoBehaviour
 
             animator.SetBool(AnimationConstants.PLAYER_JUMP, isJumping);
             animator.SetBool(AnimationConstants.PLAYER_FALL, rb.velocity.y < -0.01f);
+
+            // Coupled to attack system! Add lock movement api!
+            if (animator.GetBool(AnimationConstants.PLAYER_AREA_ATTACK))
+            {
+                rb.velocity = Vector2.zero;
+            }
         }
 
-        // Coupled to attack system! Add lock movement api!
-        if (animator.GetBool(AnimationConstants.PLAYER_AREA_ATTACK))
+        if(cantBeHit && CheckIfLanded())
         {
-            rb.velocity = Vector2.zero;
+            colliderComp.enabled = true;
+            animator.SetBool("Hit", false);
+            movementLocked = false;
+            StartCoroutine(DelayNextHit(0.5f));
         }
     }
 
@@ -102,16 +110,24 @@ public class Controller : MonoBehaviour
     {
         if(!cantBeHit)
         {
-            StartCoroutine(DelayNextHit());
-            // Set animation
-            int xDirection = hitDirection.x < 0f ? -1 : 1;
-            rb.velocity = (new Vector2(xDirection * 5f, 5f));
+            colliderComp.enabled = false;
+            animator.SetBool("Hit", true);
+            movementLocked = true;
+            cantBeHit = true;
+
             health--;
             if (health == 0)
             {
                 Die();
+                return;
             }
-            OnHit.Invoke();
+
+            int xDirection = hitDirection.x < 0f ? -1 : 1;
+            rb.velocity = (new Vector2(xDirection * 4f, 8f));
+            if(OnHit != null)
+            {
+                OnHit.Invoke();
+            }
         }
     }
 
@@ -143,23 +159,27 @@ public class Controller : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + (Physics2D.gravity.y * (notHoldingJumpMult - 1) * Time.fixedDeltaTime));
         }
 
-        CheckIfStillJumping();
+        if(CheckIfLanded())
+        {
+            isJumping = false;
+            animator.SetBool(AnimationConstants.PLAYER_JUMP, false);
+            animator.SetBool(AnimationConstants.PLAYER_FALL, false);
+        }
     }
 
-    private void CheckIfStillJumping()
+    private bool CheckIfLanded()
     {
-        if (rb.velocity.y < 0f)
+        if (rb.velocity.y < -0.05f)
         {
             Vector2 bottomLeft = colliderComp.bounds.min;
             Vector2 bottomRight = new Vector2(bottomLeft.x + (colliderComp.bounds.size.x), bottomLeft.y - 0.05f);
             Collider2D overlap = Physics2D.OverlapArea(bottomLeft, bottomRight);
             if (overlap != null && overlap != colliderComp)
             {
-                isJumping = false;
-                animator.SetBool(AnimationConstants.PLAYER_JUMP, false);
-                animator.SetBool(AnimationConstants.PLAYER_FALL, false);
+                return true;
             }
         }
+        return false;
     }
            
     private float Limit(float speed)
@@ -173,13 +193,10 @@ public class Controller : MonoBehaviour
         return isJumping;
     }
 
-    private IEnumerator DelayNextHit()
+    private IEnumerator DelayNextHit(float seconds)
     {
-        animator.SetBool("Hit", true);
-        movementLocked = true;
         cantBeHit = true;
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(seconds);
         cantBeHit = false;
-        movementLocked = false;
     }
 }

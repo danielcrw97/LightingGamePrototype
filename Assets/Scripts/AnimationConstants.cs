@@ -23,5 +23,5 @@ public static class AnimationConstants
     //Gui Animations
     public const string SETTING_BTN_CLICKED = "settingBtnClicked";
     public const string APPLICATION_WARN = "applicationWarn";
-
+    public const string LEVEL_SELECTION = "levelSelctionUi"; 
 }

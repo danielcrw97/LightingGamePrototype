@@ -22,8 +22,8 @@ public class SpiderAI : MonoBehaviour {
     private Collider2D colliderComp;
     private Transform target;
     private Animator animator;
-    private Vector2 leftBarrier;
-    private Vector2 rightBarrier;
+    public Vector2 leftBarrier;
+    public Vector2 rightBarrier;
     public State state;
 
     // Flags
@@ -202,7 +202,7 @@ public class SpiderAI : MonoBehaviour {
         }
         if((Mathf.Abs(target.transform.position.y - transform.position.y) < 0.8f) && playerInRange)
         {
-            target.gameObject.SendMessage("Hit", null, SendMessageOptions.DontRequireReceiver);
+            target.gameObject.SendMessage("Hit", (Vector2) (target.position - transform.position), SendMessageOptions.DontRequireReceiver);
         }
     }
 
@@ -274,7 +274,7 @@ public class SpiderAI : MonoBehaviour {
             else
             {
                 Vector2 hitDirection = Vector3.Normalize(obj.transform.position - transform.position);
-                obj.SendMessage("Hit", null, SendMessageOptions.DontRequireReceiver);
+                obj.SendMessage("Hit", (Vector2) (target.position - transform.position), SendMessageOptions.DontRequireReceiver);
             }
         }
         
@@ -318,10 +318,18 @@ public class SpiderAI : MonoBehaviour {
     private Vector2 FindLeftBarrier()
     {
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(colliderComp.bounds.center.x, (colliderComp.bounds.min.y - 0.1f)), Vector2.down);
-        Vector2 barrier = new Vector2(hit.collider.bounds.min.x - 0.5f, transform.position.y);
-        if(Mathf.Abs(transform.position.x - barrier.x) > 15f)
+        Vector2 barrier = new Vector2(0f, transform.position.y);
+        if(hit == null || hit.collider == null)
         {
             barrier.x = transform.position.x - 15f;
+        } 
+        else
+        {
+            barrier = new Vector2(hit.collider.bounds.min.x + 0.5f, transform.position.y);
+            if (Mathf.Abs(transform.position.x - barrier.x) > 15f)
+            {
+                barrier.x = transform.position.x - 15f;
+            }
         }
         return barrier;
     }
@@ -329,10 +337,18 @@ public class SpiderAI : MonoBehaviour {
     private Vector2 FindRightBarrier()
     {
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(colliderComp.bounds.center.x, (colliderComp.bounds.min.y - 0.1f)), Vector2.down);
-        Vector2 barrier = new Vector2(hit.collider.bounds.max.x + 0.5f, transform.position.y);
-        if (Mathf.Abs(transform.position.x - barrier.x) > 15f)
+        Vector2 barrier = new Vector2();
+        if (hit == null || hit.collider == null)
         {
             barrier.x = transform.position.x + 15f;
+        }
+        else
+        {
+            barrier = new Vector2(hit.collider.bounds.max.x - 0.5f, transform.position.y);
+            if (Mathf.Abs(transform.position.x - barrier.x) > 15f)
+            {
+                barrier.x = transform.position.x + 15f;
+            }
         }
         return barrier;
     }

@@ -11,6 +11,7 @@ public class Controller : MonoBehaviour
 {
     [Header("Events")]
     [SerializeField]
+    private UnityEvent OnHit;
     private UnityEvent OnDeath;
 
     //TODO replace all magic numbers
@@ -76,7 +77,6 @@ public class Controller : MonoBehaviour
 
         if (!isJumping && Input.GetKey(KeyCode.Space))
         {
-            Debug.Log(Time.time);
             isJumping = true;
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
         }
@@ -96,15 +96,15 @@ public class Controller : MonoBehaviour
         }
     }
 
-    public void Hit()
+    public void Hit(Vector2 hitDirection)
     {
-        // Add force to player, disable collider, play animation!
         Debug.Log("Hit");
         health--;
         if(health == 0)
         {
             Die();
         }
+        OnHit.Invoke();
     }
 
     public void Bounce()
@@ -137,11 +137,12 @@ public class Controller : MonoBehaviour
 
     private void CheckIfStillJumping()
     {
-        if (isJumping && rb.velocity.y < 0f)
+        if (rb.velocity.y < 0f)
         {
-            Vector2 midBottom = new Vector2(colliderComp.bounds.center.x, colliderComp.bounds.min.y - 0.1f);
-            RaycastHit2D rayHit = Physics2D.Raycast(midBottom, Vector2.down);
-            if ((rayHit != null) && rayHit.distance < 0.01f)
+            Vector2 bottomLeft = colliderComp.bounds.min;
+            Vector2 bottomRight = new Vector2(bottomLeft.x + (colliderComp.bounds.size.x), bottomLeft.y - 0.05f);
+            Collider2D overlap = Physics2D.OverlapArea(bottomLeft, bottomRight);
+            if (overlap != null && overlap != colliderComp)
             {
                 isJumping = false;
                 animator.SetBool(AnimationConstants.PLAYER_JUMP, false);
@@ -149,7 +150,7 @@ public class Controller : MonoBehaviour
             }
         }
     }
-
+           
     private float Limit(float speed)
     {
         float terminalVelocity = 5.0f;

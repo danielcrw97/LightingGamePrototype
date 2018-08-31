@@ -210,7 +210,7 @@ public class FishAI : MonoBehaviour {
         GameObject obj = collision.collider.gameObject;
         if(obj.tag == Tags.PLAYER_TAG)
         {
-            obj.SendMessage("Hit", (Vector2)(target.position - transform.position), SendMessageOptions.DontRequireReceiver);
+            obj.SendMessage("Hit", gameObject, SendMessageOptions.DontRequireReceiver);
         }
         else if(obj.tag == "Wall" || obj.tag == Tags.ENEMY_TAG)
         {

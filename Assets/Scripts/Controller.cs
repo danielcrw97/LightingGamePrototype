@@ -25,9 +25,10 @@ public class Controller : MonoBehaviour
     private Collider2D colliderComp;
     private Animator animator;
     private SpriteRenderer rendererComp;
-    private bool isJumping;
+    private bool isInMidair;
     private bool cantBeHit;
     private bool movementLocked;
+    private Action onLand;
 
     void Start()
     {
@@ -40,7 +41,7 @@ public class Controller : MonoBehaviour
         this.colliderComp = gameObject.GetComponent<Collider2D>();
         this.animator = gameObject.GetComponent<Animator>();
         this.rendererComp = gameObject.GetComponent<SpriteRenderer>();
-        this.isJumping = false;
+        this.isInMidair = false;
     }
 
     // Update is called once per frame
@@ -77,18 +78,18 @@ public class Controller : MonoBehaviour
                 animator.SetBool(AnimationConstants.PLAYER_RUN, false);
             }
 
-            if (!isJumping && Input.GetKey(KeyCode.Space))
+            if (!isInMidair && Input.GetKey(KeyCode.Space))
             {
-                isJumping = true;
+                isInMidair = true;
                 rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
             }
 
-            if (isJumping)
+            if (isInMidair)
             {
                 HandleJump();
             }
 
-            animator.SetBool(AnimationConstants.PLAYER_JUMP, isJumping);
+            animator.SetBool(AnimationConstants.PLAYER_JUMP, isInMidair);
             animator.SetBool(AnimationConstants.PLAYER_FALL, rb.velocity.y < -0.01f);
 
             // Coupled to attack system! Add lock movement api!
@@ -100,42 +101,51 @@ public class Controller : MonoBehaviour
 
         if(cantBeHit && CheckIfLanded())
         {
-            colliderComp.enabled = true;
-            animator.SetBool("Hit", false);
-            movementLocked = false;
-            StartCoroutine(DelayNextHit(0.5f));
+            if(onLand != null)
+            {
+                onLand.Invoke();
+            }
         }
     }
 
-    public void Hit(Vector2 hitDirection)
+    public void Hit(GameObject enemy)
     {
         if(!cantBeHit)
         {
-            colliderComp.enabled = false;
+            Physics2D.IgnoreCollision(colliderComp, enemy.GetComponent<Collider2D>(), true);
             animator.SetBool("Hit", true);
             movementLocked = true;
             cantBeHit = true;
+
+            int xDirection = (enemy.transform.position.x - transform.position.x) > 0f ? -1 : 1;
+            rb.velocity = (new Vector2(xDirection * 4f, 8f));
 
             health--;
             if (health == 0)
             {
                 Die();
-                return;
             }
 
-            int xDirection = hitDirection.x < 0f ? -1 : 1;
-            rb.velocity = (new Vector2(xDirection * 4f, 8f));
-            if(OnHit != null)
+            if (OnHit != null)
             {
                 OnHit.Invoke();
             }
+
+            onLand = () =>
+            {
+                Physics2D.IgnoreCollision(colliderComp, enemy.GetComponent<Collider2D>(), false);
+                animator.SetBool("Hit", false);
+                movementLocked = false;
+                StartCoroutine(DelayNextHit(0.5f));
+                this.onLand = null;
+            };
         }
     }
 
     public void Bounce()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpSpeed * 3);
-        isJumping = true;
+        isInMidair = true;
     }
 
     public void Die()
@@ -162,7 +172,7 @@ public class Controller : MonoBehaviour
 
         if(CheckIfLanded())
         {
-            isJumping = false;
+            isInMidair = false;
             animator.SetBool(AnimationConstants.PLAYER_JUMP, false);
             animator.SetBool(AnimationConstants.PLAYER_FALL, false);
         }
@@ -191,7 +201,7 @@ public class Controller : MonoBehaviour
 
     public bool IsJumping()
     {
-        return isJumping;
+        return isInMidair;
     }
 
     private IEnumerator DelayNextHit(float seconds)

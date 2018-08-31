@@ -202,7 +202,7 @@ public class SpiderAI : MonoBehaviour {
         }
         if((Mathf.Abs(target.transform.position.y - transform.position.y) < 0.8f) && playerInRange)
         {
-            target.gameObject.SendMessage("Hit", (Vector2) (target.position - transform.position), SendMessageOptions.DontRequireReceiver);
+            target.gameObject.SendMessage("Hit", gameObject, SendMessageOptions.DontRequireReceiver);
         }
     }
 
@@ -273,7 +273,7 @@ public class SpiderAI : MonoBehaviour {
             }
             else
             {
-                obj.SendMessage("Hit", (Vector2) (target.position - transform.position), SendMessageOptions.DontRequireReceiver);
+                obj.SendMessage("Hit", gameObject, SendMessageOptions.DontRequireReceiver);
             }
         }
         

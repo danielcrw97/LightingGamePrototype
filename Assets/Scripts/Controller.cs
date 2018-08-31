@@ -112,12 +112,18 @@ public class Controller : MonoBehaviour
             }
         }
 
-        if(cantBeHit && CheckIfLanded())
+        if(cantBeHit && rb.velocity.y < -0.05f && CheckIfLanded())
         {
             if(onLand != null)
             {
                 onLand.Invoke();
             }
+        }
+
+        if(rb.velocity.y < -0.1f)
+        {
+            isInMidair = true;
+            animator.SetBool(AnimationConstants.PLAYER_FALL, true);
         }
     }
 
@@ -197,16 +203,14 @@ public class Controller : MonoBehaviour
 
     private bool CheckIfLanded()
     {
-        if (rb.velocity.y < -0.05f)
+        Vector2 bottomLeft = colliderComp.bounds.min + new Vector3(0.01f, 0f, 0f);
+        Vector2 bottomRight = new Vector2(bottomLeft.x + colliderComp.bounds.size.x, bottomLeft.y - 0.1f);
+        Collider2D overlap = Physics2D.OverlapArea(bottomLeft, bottomRight);
+        if (overlap != null && overlap != colliderComp)
         {
-            Vector2 bottomLeft = colliderComp.bounds.min;
-            Vector2 bottomRight = new Vector2(bottomLeft.x + (colliderComp.bounds.size.x), bottomLeft.y - 0.1f);
-            Collider2D overlap = Physics2D.OverlapArea(bottomLeft, bottomRight);
-            if (overlap != null && overlap != colliderComp)
-            {
-                return true;
-            }
+            return true;
         }
+       
         return false;
     }
            

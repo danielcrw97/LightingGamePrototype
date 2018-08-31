@@ -49,7 +49,7 @@ public class FishAI : MonoBehaviour {
         lastHitByLight = new Vector2();
         this.maxSpeed = 3f;
         this.jumpSpeed = 11f;
-        float random = UnityEngine.Random.Range(0f, 8f);
+        float random = UnityEngine.Random.Range(0f, 2f);
         WaitUntilNextJump(random);
 	}
 

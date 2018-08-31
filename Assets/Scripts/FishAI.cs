@@ -23,7 +23,7 @@ public class FishAI : MonoBehaviour {
     private Vector2 leftLimit;
     private Vector2 rightLimit;
     private Vector2 lastHitByLight;
-    private State state;
+    public State state;
     private Coroutine waitingRoutine;
     private bool waiting;
     private bool jumping;

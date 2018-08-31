@@ -45,7 +45,7 @@ public class Torch : MonoBehaviour {
     private static readonly Vector3 INIT_TORCH_POS = new Vector3(0.29f, 0.2f, -1f);
     private static readonly Vector3 AREA_ATTACK_TORCH_POS = new Vector3(-0.02f, 0.405f, -4f);
     private static readonly Vector3 SPOTLIGHT_INIT_POS = new Vector3(-0.32f, 0.139f, -0.16f);
-    private static readonly Vector3 SPOTLIGHT_DOWN_POS = new Vector3(0.52f, 0.91f, -0.16f);
+    private static readonly Vector3 SPOTLIGHT_DOWN_POS = new Vector3(-0.038f, 0.308f, -0.16f);
     private static readonly Vector3 SPOTLIGHT_UP_POS = new Vector3(0.52f, -0.8f, -0.16f);
 
     //TODO FIX PARTICLE SYSTEM

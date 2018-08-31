@@ -35,6 +35,14 @@ public class SpiderAI : MonoBehaviour {
     private const float ATTACK_DISTANCE = 2f;
     private const float SPIDER_RANGE = 5f;
 
+
+    //Sound Fx
+    [SerializeField]
+    private AudioSource AudioSource,movementsound;
+    [SerializeField]
+    private AudioClip[] fx;
+
+
     void Awake() {
         this.target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
@@ -53,6 +61,8 @@ public class SpiderAI : MonoBehaviour {
 
         this.cantAttack = false;
         this.waiting = false;
+
+        this.AudioSource = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -119,6 +129,7 @@ public class SpiderAI : MonoBehaviour {
         {
             this.rb.velocity = Vector2.left * speed;
         }
+
     }
 
     private void Patrol()
@@ -185,6 +196,8 @@ public class SpiderAI : MonoBehaviour {
         if(!cantAttack && !animator.GetBool("Attacking"))
         {
             animator.SetBool("Attacking", true);
+
+            AudioSource.PlayOneShot(fx[0], 0.7f);
         }
     }
 
@@ -270,6 +283,7 @@ public class SpiderAI : MonoBehaviour {
             {
                 animator.SetTrigger("Bounce");
                 obj.SendMessage("Bounce", null, SendMessageOptions.DontRequireReceiver);
+                AudioSource.PlayOneShot(fx[1], 0.7f);
             }
             else
             {

@@ -30,6 +30,12 @@ public class Controller : MonoBehaviour
     private bool movementLocked;
     private Action onLand;
 
+    //Sound Fx
+    [SerializeField]
+    private AudioSource AudioSource;
+    [SerializeField]
+    private AudioClip[] fx;
+
     void Start()
     {
         this.speed = 2.5f;
@@ -42,6 +48,7 @@ public class Controller : MonoBehaviour
         this.animator = gameObject.GetComponent<Animator>();
         this.rendererComp = gameObject.GetComponent<SpriteRenderer>();
         this.isInMidair = false;
+        this.AudioSource = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -72,6 +79,9 @@ public class Controller : MonoBehaviour
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             {
                 animator.SetBool(AnimationConstants.PLAYER_RUN, true);
+
+
+      
             }
             else
             {
@@ -82,6 +92,9 @@ public class Controller : MonoBehaviour
             {
                 isInMidair = true;
                 rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+             
+                //FX for Jump
+                AudioSource.PlayOneShot(fx[0],0.9f);
             }
 
             if (isInMidair)
@@ -177,6 +190,8 @@ public class Controller : MonoBehaviour
             isInMidair = false;
             animator.SetBool(AnimationConstants.PLAYER_JUMP, false);
             animator.SetBool(AnimationConstants.PLAYER_FALL, false);
+            AudioSource.PlayOneShot(fx[1], 1.0f);
+
         }
     }
 

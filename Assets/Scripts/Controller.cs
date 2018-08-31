@@ -183,7 +183,7 @@ public class Controller : MonoBehaviour
         if (rb.velocity.y < -0.05f)
         {
             Vector2 bottomLeft = colliderComp.bounds.min;
-            Vector2 bottomRight = new Vector2(bottomLeft.x + (colliderComp.bounds.size.x), bottomLeft.y - 0.05f);
+            Vector2 bottomRight = new Vector2(bottomLeft.x + (colliderComp.bounds.size.x), bottomLeft.y - 0.1f);
             Collider2D overlap = Physics2D.OverlapArea(bottomLeft, bottomRight);
             if (overlap != null && overlap != colliderComp)
             {

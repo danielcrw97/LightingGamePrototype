@@ -7,11 +7,13 @@ public class SmartCamera : MonoBehaviour {
     private Transform target;
     private Vector3 offset;
     private Camera mainCamera;
+    private LevelManager manager;
 
     public float smoothSpeed = 0.125f;
 
     void Awake()
     {
+        manager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         target = GameObject.FindGameObjectWithTag(Tags.PLAYER_TAG).transform;
         transform.position = target.position + offset;
     }
@@ -27,6 +29,8 @@ public class SmartCamera : MonoBehaviour {
 	void FixedUpdate () {
         Vector3 desiredPosition = target.position + offset;
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        smoothedPosition.x = Mathf.Clamp(smoothedPosition.x, manager.minX, manager.maxX);
+        smoothedPosition.y = Mathf.Clamp(smoothedPosition.y, manager.minY, manager.maxY);
         transform.position = smoothedPosition;
 	}
 }

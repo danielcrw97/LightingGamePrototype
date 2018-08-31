@@ -12,6 +12,7 @@ public class Controller : MonoBehaviour
     [Header("Events")]
     [SerializeField]
     private UnityEvent OnHit;
+    [SerializeField]
     private UnityEvent OnDeath;
 
     public float speed;

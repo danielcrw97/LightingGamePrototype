@@ -20,9 +20,6 @@ public class Torch : MonoBehaviour {
         RIGHT
     }
 
-    [SerializeField]
-    private GameObject rechargeParticles;
-
     private ParticleSystem particles;
     private Animator animator;
     private Light pointLight;
@@ -75,8 +72,7 @@ public class Torch : MonoBehaviour {
         this.animator = GetComponent<Animator>();
         this.energyRemaining = MAX_ENERGY;
         this.state = TorchState.Normal;
-        Instantiate(rechargeParticles, this.transform, false);
-        this.particles = rechargeParticles.GetComponent<ParticleSystem>();
+        this.particles = GetComponentInChildren<ParticleSystem>();
         particles.Stop();
     }
 	
@@ -145,19 +141,25 @@ public class Torch : MonoBehaviour {
         }
 
         // Check whether the player can recharge.
+        bool nextToCrystal = false;
         foreach (Transform crystalPos in crystalPositions)
         {
             // If close enough to a crystal listen for recharging inputs. 
-            if ((crystalPos.position - transform.position).magnitude < 1f && Input.GetKey(KeyCode.R))
+            if ((crystalPos.position - transform.position).magnitude < 1f)
             {
-                Recharge();
-                if (!particles.isPlaying)
+                nextToCrystal = true;
+                if(Input.GetKey(KeyCode.R))
                 {
-                    particles.Play();
+                    Recharge();
+                    if (!particles.isPlaying)
+                    {
+                        particles.Play();
+                    }
                 }
             }
         }
-        if (particles.isPlaying && (Input.GetKey(KeyCode.R)))
+
+        if (particles.isPlaying && (!Input.GetKey(KeyCode.R) || !nextToCrystal))
         {
             particles.Stop();
         }
@@ -212,9 +214,8 @@ public class Torch : MonoBehaviour {
         KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
         if (input != KeyCode.None)
         {
-            if (!animator.GetBool(AnimationConstants.PLAYER_CONE_ATTACK))
+            if(!spotLight.enabled)
             {
-                animator.SetBool(AnimationConstants.PLAYER_CONE_ATTACK, true);
                 spotLight.enabled = true;
             }
 
@@ -227,12 +228,18 @@ public class Torch : MonoBehaviour {
                     rendererComp.flipX = false;
                     spotLight.transform.eulerAngles = new Vector3(0f, 90f, 0f);
                     spotLight.transform.localPosition = SPOTLIGHT_INIT_POS;
+                    animator.SetBool(AnimationConstants.PLAYER_CONE_ATTACK, true);
+                    animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, false);
+                    animator.SetBool("DownCone", false);
                     break;
 
                 case KeyCode.LeftArrow:
                     rendererComp.flipX = true;
                     spotLight.transform.eulerAngles = new Vector3(180f, 90f, 0f);
                     spotLight.transform.localPosition = new Vector3(-SPOTLIGHT_INIT_POS.x, SPOTLIGHT_INIT_POS.y, SPOTLIGHT_INIT_POS.z);
+                    animator.SetBool(AnimationConstants.PLAYER_CONE_ATTACK, true);
+                    animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, false);
+                    animator.SetBool("DownCone", false);
                     break;
 
                 case KeyCode.UpArrow:
@@ -245,6 +252,9 @@ public class Torch : MonoBehaviour {
                     {
                         spotLight.transform.localPosition = SPOTLIGHT_UP_POS;
                     }
+                    animator.SetBool(AnimationConstants.PLAYER_CONE_ATTACK, false);
+                    animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, true);
+                    animator.SetBool("DownCone", false);
                     break;
 
                 case KeyCode.DownArrow:
@@ -257,6 +267,9 @@ public class Torch : MonoBehaviour {
                     {
                         spotLight.transform.localPosition = SPOTLIGHT_DOWN_POS;
                     }
+                    animator.SetBool(AnimationConstants.PLAYER_CONE_ATTACK, false);
+                    animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, false);
+                    animator.SetBool("DownCone", true);
                     break;
             }
 
@@ -284,6 +297,8 @@ public class Torch : MonoBehaviour {
             spotLight.enabled = false;
             pointLight.enabled = true;
             animator.SetBool(AnimationConstants.PLAYER_CONE_ATTACK, false);
+            animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, false);
+            animator.SetBool("DownCone", false);
             state = TorchState.Normal;
             NormalTorch();
             return;
@@ -313,7 +328,7 @@ public class Torch : MonoBehaviour {
 
     private void Recharge()
     {
-        AddEnergy(200f * Time.deltaTime);
+        AddEnergy(50f * Time.deltaTime);
     }
 
     private void UpdateLight()

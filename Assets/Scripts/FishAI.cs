@@ -212,6 +212,11 @@ public class FishAI : MonoBehaviour {
         {
             obj.SendMessage("Hit", (Vector2)(target.position - transform.position), SendMessageOptions.DontRequireReceiver);
         }
+        else if(obj.tag == "Wall" || obj.tag == Tags.ENEMY_TAG)
+        {
+            // In the unlikely event of colliding, flee from the source.
+            HitByLight(obj.transform.position);
+        }
     }
 
     private float EstimateAirTimeInSeconds()

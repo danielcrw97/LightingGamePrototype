@@ -32,7 +32,7 @@ public class Torch : MonoBehaviour {
 
     // Torch constants.
     public const float rechargeRate = 200f;
-    public const float MAX_ENERGY = 300f;
+    public const float MAX_ENERGY = 200f;
     public const float DEFAULT_LIGHT_RANGE = 10f;
     public const float MIN_LIGHT_RANGE = 2.5f;
     private const float AREA_ATTACK_TORCH_STRENGTH = 50f;
@@ -121,7 +121,7 @@ public class Torch : MonoBehaviour {
         }
 
         // Transition to Cone
-        KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
+        KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
         if (input != KeyCode.None)
         {
             spotLight.enabled = true;
@@ -172,7 +172,7 @@ public class Torch : MonoBehaviour {
     private void AreaTorch()
     {
         // Transition to cone.
-        KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
+        KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
         if (input != KeyCode.None)
         {
             spotLight.enabled = true;
@@ -211,7 +211,7 @@ public class Torch : MonoBehaviour {
 
     private void ConeTorch()
     {
-        KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
+        KeyCode input = InputUtils.CheckForMultipleInputs(KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow);
         if (input != KeyCode.None)
         {
             if(!spotLight.enabled)
@@ -241,7 +241,7 @@ public class Torch : MonoBehaviour {
                     animator.SetBool("DownCone", false);
                     direction = ConeDirection.LEFT;
                     break;
-
+                /*
                 case KeyCode.UpArrow:
                     spotLight.transform.eulerAngles = new Vector3(-90f, 90f, 0f);
                     if(rendererComp.flipX)
@@ -257,6 +257,7 @@ public class Torch : MonoBehaviour {
                     animator.SetBool("DownCone", false);
                     direction = ConeDirection.UP;
                     break;
+                 */
 
                 case KeyCode.DownArrow:
                     spotLight.transform.eulerAngles = new Vector3(90f, 90f, 0f);

@@ -356,7 +356,6 @@ MonoBehaviour:
   AudioSource: {fileID: 0}
   fx:
   - {fileID: 8300000, guid: bf684f82f57dfa04fa9ebe107a8a0619, type: 3}
-  - {fileID: 8300000, guid: ba7ffc4e00307144780b538c918c2bfa, type: 3}
 --- !u!212 &212074009581455290
 SpriteRenderer:
   m_ObjectHideFlags: 1

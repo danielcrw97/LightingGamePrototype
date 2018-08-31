@@ -38,9 +38,9 @@ public class Controller : MonoBehaviour
 
     void Start()
     {
-        this.speed = 2.5f;
-        this.jumpSpeed = 10f;
-        this.fallingGravityMult = 1.6f;
+        this.speed = 3f;
+        this.jumpSpeed = 12f;
+        this.fallingGravityMult = 2f;
         this.notHoldingJumpMult = 2.5f;
         this.health = 3;
         this.rb = gameObject.GetComponent<Rigidbody2D>();
@@ -166,7 +166,7 @@ public class Controller : MonoBehaviour
 
     public void Bounce()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed * 3);
+        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed * 2f);
         isInMidair = true;
     }
 

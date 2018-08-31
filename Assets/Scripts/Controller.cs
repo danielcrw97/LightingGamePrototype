@@ -131,6 +131,8 @@ public class Controller : MonoBehaviour
                 OnHit.Invoke();
             }
 
+            StartCoroutine(UnlockMovementTimeout());
+
             onLand = () =>
             {
                 Physics2D.IgnoreCollision(colliderComp, enemy.GetComponent<Collider2D>(), false);
@@ -209,5 +211,11 @@ public class Controller : MonoBehaviour
         cantBeHit = true;
         yield return new WaitForSeconds(seconds);
         cantBeHit = false;
+    }
+
+    private IEnumerator UnlockMovementTimeout()
+    {
+        yield return new WaitForSeconds(3f);
+        movementLocked = false;
     }
 }

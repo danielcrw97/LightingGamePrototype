@@ -25,8 +25,8 @@ public class FishAI : MonoBehaviour {
     private Vector2 lastHitByLight;
     public State state;
     private Coroutine waitingRoutine;
-    private bool waiting;
-    private bool jumping;
+    public bool waiting;
+    public bool jumping;
     private float estimatedAirTime;
 
     private const float WANDER_RANGE = 10f;
@@ -173,15 +173,13 @@ public class FishAI : MonoBehaviour {
 
     private bool HasLanded()
     {
-        if(rb.velocity.y < 0f)
+
+        Vector2 bottomLeft = colliderComp.bounds.min - new Vector3(0f, 0.05f, 0f);
+        Vector2 bottomRight = new Vector2(bottomLeft.x + (colliderComp.bounds.size.x), bottomLeft.y - 0.2f);
+        Collider2D overlap = Physics2D.OverlapArea(bottomLeft, bottomRight);
+        if(overlap != null && overlap != colliderComp)
         {
-            Vector2 bottomLeft = colliderComp.bounds.min - new Vector3(0f, 0.05f, 0f);
-            Vector2 bottomRight = new Vector2(bottomLeft.x + (colliderComp.bounds.size.x), bottomLeft.y - 0.05f);
-            Collider2D overlap = Physics2D.OverlapArea(bottomLeft, bottomRight);
-            if(overlap != null && overlap != colliderComp)
-            {
-                return true;
-            }
+            return true;
         }
         return false;
     }

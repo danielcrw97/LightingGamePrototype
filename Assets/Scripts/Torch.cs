@@ -219,9 +219,7 @@ public class Torch : MonoBehaviour {
                 spotLight.enabled = true;
             }
 
-            int numberOfRays = 10;
-            float rayAngle = spotLight.spotAngle;
-
+            ConeDirection direction = ConeDirection.UP;
             switch (input)
             {
                 case KeyCode.RightArrow:
@@ -231,6 +229,7 @@ public class Torch : MonoBehaviour {
                     animator.SetBool(AnimationConstants.PLAYER_CONE_ATTACK, true);
                     animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, false);
                     animator.SetBool("DownCone", false);
+                    direction = ConeDirection.RIGHT;
                     break;
 
                 case KeyCode.LeftArrow:
@@ -240,6 +239,7 @@ public class Torch : MonoBehaviour {
                     animator.SetBool(AnimationConstants.PLAYER_CONE_ATTACK, true);
                     animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, false);
                     animator.SetBool("DownCone", false);
+                    direction = ConeDirection.LEFT;
                     break;
 
                 case KeyCode.UpArrow:
@@ -255,6 +255,7 @@ public class Torch : MonoBehaviour {
                     animator.SetBool(AnimationConstants.PLAYER_CONE_ATTACK, false);
                     animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, true);
                     animator.SetBool("DownCone", false);
+                    direction = ConeDirection.UP;
                     break;
 
                 case KeyCode.DownArrow:
@@ -270,17 +271,38 @@ public class Torch : MonoBehaviour {
                     animator.SetBool(AnimationConstants.PLAYER_CONE_ATTACK, false);
                     animator.SetBool(AnimationConstants.PLAYER_AREA_ATTACK, false);
                     animator.SetBool("DownCone", true);
+                    direction = ConeDirection.DOWN;
                     break;
             }
 
+            int numberOfRays = 30;
+            float rayAngle = spotLight.spotAngle;
             float distanceBetweenRays = rayAngle / numberOfRays;
             float angleHalved = rayAngle / 2;
             for(float angle=-angleHalved; angle<angleHalved; angle += distanceBetweenRays)
             {
-                float worldAngle = spotLight.transform.eulerAngles.x + angle;
+                float worldAngle = angle;
+                switch (direction)
+                {
+                    case ConeDirection.RIGHT:
+                        worldAngle = angle;
+                        break;
+
+                    case ConeDirection.LEFT:
+                        worldAngle = 180f + angle;
+                        break;
+
+                    case ConeDirection.UP:
+                        worldAngle = -90f + angle;
+                        break;
+
+                    case ConeDirection.DOWN:
+                        worldAngle = 90f + angle;
+                        break;
+                }
               
-                Vector2 direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * worldAngle), Mathf.Sin(Mathf.Deg2Rad * worldAngle));
-                RaycastHit2D[] hits = Physics2D.RaycastAll(spotLight.transform.position, direction, CONE_ATTACK_TORCH_RANGE);
+                Vector2 rayDirection = new Vector2(Mathf.Cos(Mathf.Deg2Rad * worldAngle), Mathf.Sin(Mathf.Deg2Rad * worldAngle));
+                RaycastHit2D[] hits = Physics2D.RaycastAll(spotLight.transform.position, rayDirection, CONE_ATTACK_TORCH_RANGE);
                 foreach(RaycastHit2D hit in hits)
                 {
                     if ((hit.collider != null) && (hit.collider.gameObject.tag == Tags.ENEMY_TAG))
@@ -288,7 +310,6 @@ public class Torch : MonoBehaviour {
                         hit.collider.gameObject.SendMessage("HitByLight", (Vector2)spotLight.transform.position, SendMessageOptions.DontRequireReceiver);
                     }
                 }
-                Debug.DrawLine(new Vector3(spotLight.transform.position.x, spotLight.transform.position.y, -0.01f), new Vector3(direction.x, direction.y, 0f), Color.green);
             }
             energyRemaining -= (CONE_ATTACK_LIGHT_USAGE * Time.deltaTime);
         }

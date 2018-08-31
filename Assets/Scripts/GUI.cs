@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GUI : MonoBehaviour
 {
@@ -58,22 +59,36 @@ public class GUI : MonoBehaviour
     public void Levels(int para)
     {
         if (para == 1)
-          {
-             //level 1
-           }
-             else if (para == 2)
-                {
-                  //level 2
-                }
-                 else if (para == 3)
-                   {
-                     //level 3
-                   }
-                    else if (para == 4)
-                       {
-                        //level 4
-                       }
-    playaudio();
+        {
+            SceneManager.LoadScene("Level 1");
+            //level 1
+        }
+        else if (para == 2)
+        {
+            SceneManager.LoadScene("Level 2");
+            //level 2
+        }
+        else if (para == 3)
+        {
+            SceneManager.LoadScene("Level 3");
+            //level 3
+        }
+        else if (para == 4)
+        {
+            SceneManager.LoadScene("Level 4");
+            //level 4
+        }
+        else if (para == 5)
+        {
+            SceneManager.LoadScene("Level 5");
+            //level 4
+        }
+        else if (para == 6)
+        {
+            SceneManager.LoadScene("Level 6");
+            //level 4
+        }
+        playaudio();
     }
     private void playaudio()
     {

@@ -32,6 +32,14 @@ public class FishAI : MonoBehaviour {
     private const float WANDER_RANGE = 10f;
     private const float FLEE_RANGE = 10f;
 
+
+    //Sound Fx
+    [SerializeField]
+    private AudioSource AudioSource;
+    [SerializeField]
+    private AudioClip[] fx;
+
+
     void Awake()
     {
         target = GameObject.FindGameObjectWithTag(Tags.PLAYER_TAG).transform;
@@ -51,7 +59,9 @@ public class FishAI : MonoBehaviour {
         this.jumpSpeed = 11f;
         float random = UnityEngine.Random.Range(0f, 2f);
         WaitUntilNextJump(random);
-	}
+        this.AudioSource = gameObject.GetComponent<AudioSource>();
+
+    }
 
     void FixedUpdate()
     {
@@ -105,11 +115,13 @@ public class FishAI : MonoBehaviour {
             }
             rb.velocity = new Vector2(randomSpeed, jumpSpeed);
             jumping = true;
-            
+        
+
         }
         else if(jumping)
         {
             HandleJump(4f);
+
         }
     }
 
@@ -168,19 +180,21 @@ public class FishAI : MonoBehaviour {
         {
             jumping = false;
             waitingRoutine = StartCoroutine(WaitUntilNextJump(landingWaitTime));
+            AudioSource.PlayOneShot(fx[0], 0.5f);
         }
     }
 
     private bool HasLanded()
     {
-
         Vector2 bottomLeft = colliderComp.bounds.min - new Vector3(-0.01f, 0.05f, 0f);
         Vector2 bottomRight = new Vector2(bottomLeft.x + (colliderComp.bounds.size.x - 0.02f), bottomLeft.y - 0.2f);
         Collider2D overlap = Physics2D.OverlapArea(bottomLeft, bottomRight);
-        if(overlap != null && overlap != colliderComp)
+  
+        if (overlap != null && overlap != colliderComp)
         {
             return true;
         }
+        AudioSource.PlayOneShot(fx[1], 0.5f);
         return false;
     }
 

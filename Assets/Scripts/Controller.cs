@@ -135,11 +135,12 @@ public class Controller : MonoBehaviour
             animator.SetBool("Hit", true);
             movementLocked = true;
             cantBeHit = true;
-
+           
             int xDirection = (enemy.transform.position.x - transform.position.x) > 0f ? -1 : 1;
             rb.velocity = (new Vector2(xDirection * 4f, 8f));
 
             health--;
+            AudioSource.PlayOneShot(fx[2], 0.7f);
             if (health == 0)
             {
                 Die();

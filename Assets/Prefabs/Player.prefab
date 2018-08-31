@@ -423,6 +423,7 @@ MonoBehaviour:
   fx:
   - {fileID: 8300000, guid: 674b6a061e09264459bc4bd80acc5301, type: 3}
   - {fileID: 8300000, guid: e9c3cea29e2b6c24a86df58ef11a4182, type: 3}
+  - {fileID: 8300000, guid: 749519bbab27e93439297449841c0367, type: 3}
 --- !u!198 &198976879601968976
 ParticleSystem:
   m_ObjectHideFlags: 1

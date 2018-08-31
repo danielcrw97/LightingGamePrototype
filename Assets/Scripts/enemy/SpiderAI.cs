@@ -129,7 +129,6 @@ public class SpiderAI : MonoBehaviour {
         {
             this.rb.velocity = Vector2.left * speed;
         }
-
     }
 
     private void Patrol()

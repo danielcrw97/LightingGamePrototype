@@ -462,7 +462,8 @@ Prefab:
       propertyPath: m_Name
       value: Fish (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114809866495306014, guid: c9c88e77e53096847ba6c467b7a062c2, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: c9c88e77e53096847ba6c467b7a062c2, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1001 &627723210
@@ -511,6 +512,31 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9c88e77e53096847ba6c467b7a062c2, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &1096379769 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1520112041682750, guid: c9c88e77e53096847ba6c467b7a062c2,
+    type: 2}
+  m_PrefabInternal: {fileID: 544967797}
+--- !u!114 &1096379772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1096379769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81ff9cc5051d8ac4691f8482cb2db741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 0
+  jumpSpeed: 0
+  state: 0
+  waiting: 0
+  jumping: 0
+  AudioSource: {fileID: 0}
+  fx:
+  - {fileID: 8300000, guid: bf684f82f57dfa04fa9ebe107a8a0619, type: 3}
+  - {fileID: 8300000, guid: ba7ffc4e00307144780b538c918c2bfa, type: 3}
 --- !u!1001 &1113913967
 Prefab:
   m_ObjectHideFlags: 0
@@ -32526,16 +32552,6 @@ Prefab:
     - target: {fileID: 1859546368753202, guid: c873a1b68733fcb47927697326a4ef8f, type: 2}
       propertyPath: m_Name
       value: Spider (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 82203341651401432, guid: c873a1b68733fcb47927697326a4ef8f,
-        type: 2}
-      propertyPath: m_PlayOnAwake
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 82203341651401432, guid: c873a1b68733fcb47927697326a4ef8f,
-        type: 2}
-      propertyPath: Loop
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c873a1b68733fcb47927697326a4ef8f, type: 2}

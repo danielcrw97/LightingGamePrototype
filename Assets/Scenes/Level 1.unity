@@ -1068,6 +1068,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114809866495306014, guid: c9c88e77e53096847ba6c467b7a062c2,
+        type: 2}
+      propertyPath: fx.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4672432715410040, guid: c9c88e77e53096847ba6c467b7a062c2, type: 2}
       propertyPath: m_LocalPosition.x
       value: 112.78551
@@ -1104,6 +1109,11 @@ Prefab:
       propertyPath: m_Name
       value: Fish (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 114809866495306014, guid: c9c88e77e53096847ba6c467b7a062c2,
+        type: 2}
+      propertyPath: fx.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: ba7ffc4e00307144780b538c918c2bfa, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9c88e77e53096847ba6c467b7a062c2, type: 2}
   m_IsPrefabAsset: 0

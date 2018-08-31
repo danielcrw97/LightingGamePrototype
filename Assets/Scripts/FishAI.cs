@@ -30,7 +30,7 @@ public class FishAI : MonoBehaviour {
     private float estimatedAirTime;
 
     private const float WANDER_RANGE = 10f;
-    private const float FLEE_RANGE = 15f;
+    private const float FLEE_RANGE = 10f;
 
     void Awake()
     {

@@ -38,6 +38,15 @@ public class GUI : MonoBehaviour
         {
             animator.SetBool(AnimationConstants.LEVEL_SELECTION, false);
         }
+        else if (para == "AboutOpen")
+        {
+            animator.SetBool("About_Open", true);
+        }
+        else if (para == "AboutClose")
+        {
+            animator.SetBool("About_Open", false);
+        }
+
 
         //Application Quit warning
         else if (para == "Quit")

@@ -1,9 +1,9 @@
 # LightingGamePrototype
 
+A small action-platformer developed in a week for the Brackeys game jam.
+
 ## Premise
 You play as an injured astronaut whose ship has crash landed on a planet. The planet is covered in darkness with no sources of light anyhere - except for the few crystals that fuelled your ship which scatter the planet.
-
-## TODOS
 
 ### Main priorities-
 * Set up flashlight visuals. DONE
@@ -22,18 +22,21 @@ You play as an injured astronaut whose ship has crash landed on a planet. The pl
 * Smooth camera DONE
 * Finish start screen. 
 * Set up hit response + animation properly DONE
-* Make sure enemies react properply to walls + other enemies. 
-* Add all sound effects
-* Set up keyboard mappings
-* Create death settings (respawning)
-* Create level transitions
-* Playtest + balance
-* Make particle effects show at correct times. 
+* Make sure enemies react properply to walls + other enemies. DONE
+* Add all sound effects DONE
+* Set up keyboard mappings NOT DONE
+* Create death settings (respawning) DONE
+* Create level transitions DONE
+* Playtest + balance NOT DONE 
+* Make particle effects show at correct times. DONE? 
 
 ### Possible future tasks-
-* Particle effects for monsters being hit.
-* Sound effects for monsters being hit/dying.
-* Platforms that only exist when light is shined on them.
-* Add traps (spikes, arrows etc.)
-* Add water
-* Add more enemies 
+* Particle effects for monsters being hit. DONE
+* Sound effects for monsters being hit/dying. NOT DONE
+* Platforms that only exist when light is shined on them. NOT DONE
+* Add traps (spikes, arrows etc.) NOT DONE
+* Add water NOT DONE
+* Add more enemies NOT DONE
+
+## Retrospective
+The project probably needed some more polish first in regards to levels and gameplay before some of the new features were added. In hindsight with our time limits we should perhaps have focused solely on platforming rather than expanding our scope so soon. 
